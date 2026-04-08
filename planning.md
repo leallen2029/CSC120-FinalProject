@@ -1,10 +1,11 @@
 Sherlock 
 
+______
 Intro()
 Intro blurb
-Where you are 
-You get a phone call
-You wake up Watson and tell him to get going
+-Where you are 
+-You get a phone call
+-You wake up Watson and tell him to get going
 Do you want to take a cab or walk
 
 cab() 
@@ -15,7 +16,7 @@ Watson takes a cab… because of his leg
 You notice a luggage abandoned in an alleyway
 
 …You arrive
-
+_______
 House()
 You have arrived at the place of the death.
 Do you want to look outside or inside? Or what do you want to do?
@@ -31,7 +32,7 @@ body() what do you notice?
 
 downstairs()
 
-
+________
 actions()
 lookaround()
 Tells the environment of a particular location 
@@ -40,6 +41,8 @@ Open
 Take
 Pickpocket
 Enter?
+notice()
+- asks what the reader notices? 
 
-
+____________
 ?narratives()

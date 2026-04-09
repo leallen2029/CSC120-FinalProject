@@ -46,3 +46,6 @@ notice()
 
 ____________
 ?narratives()
+
+
+ohhh im going to make some general actions and override them in the instances

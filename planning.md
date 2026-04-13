@@ -49,3 +49,15 @@ ____________
 
 
 ohhh im going to make some general actions and override them in the instances
+
+
+	Main.java
+	Scene.java
+	IntroScene.java
+	HouseScene.java
+    AdventureScene.java
+	BustScene.java
+	CabRideScene.java
+	FinalScene.java
+	Player.java
+	Item.java

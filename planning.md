@@ -44,6 +44,8 @@ Enter?
 notice()
 - asks what the reader notices? 
 
+you can do some things again  and you can put up and place down things
+
 ____________
 ?narratives()
 

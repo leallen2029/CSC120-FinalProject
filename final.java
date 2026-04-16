@@ -1,3 +1,3 @@
-public class final {
+public class Final {
     
 }

@@ -17,4 +17,7 @@ public class Narrative {
         narratives.add(transportOption);
     }
 
+    public ArrayList<String> getNarratives() {
+        return narratives;
+    }
 }

@@ -1,10 +1,18 @@
 import java.util.Scanner;
 
-public class Intro extends narrative {
+public class Intro {
+    String wakingUp = """
+    You wake up up in the dark of you 221B Baker Street flat. 
+    As you pick up the phone as you hear Detective Inspector Lestrade tell you there has been another death that he wants you to come look at. 
+    You get out of bed and get ready to go to the crime scene. 
+    You grab your coat, hat, and John Watson, heading out the door.
+    """;
+
     public static void main(String[] args) {
         Intro intro = new Intro();
-        System.out.println(intro.narratives.get(0));
-        System.out.println(intro.narratives.get(1));
+        System.out.println(wakingUp);
+
+        
         Scanner input = new Scanner(System.in);
         String transportChoice = input.nextLine();
         if (transportChoice.equalsIgnoreCase("cab")) {
@@ -23,6 +31,12 @@ public class Intro extends narrative {
         }
         input.close();
     }
+
+
+
+
+    }
+
 
     
 }

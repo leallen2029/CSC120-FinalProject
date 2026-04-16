@@ -1,3 +1,3 @@
-public class cab {
+public class Cab {
     
 }

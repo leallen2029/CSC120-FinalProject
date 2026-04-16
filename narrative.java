@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-public class narrative {
-    ArrayList<String> narratives = new ArrayList<String>();
+public class Narrative {
+    ArrayList<String> Narratives = new ArrayList<String>();
 
     String wakingUp = """
     You wake up up in the dark of you 221B Baker Street flat. 
@@ -12,9 +12,9 @@ public class narrative {
 
     String transportOption = "How would you like to get to the crime scene? You can take a cab or walk";
 
-    public narrative() {
-        narratives.add(wakingUp);
-        narratives.add(transportOption);
+    public Narrative() {
+        Narratives.add(wakingUp);
+        Narratives.add(transportOption);
     }
 
 }

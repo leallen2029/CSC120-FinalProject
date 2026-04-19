@@ -16,7 +16,7 @@ public class Main {
 
             if (currentScene.isCompleted()) {
                 if (currentScene instanceof Intro) {
-                    currentScene = new House();
+                    currentScene = new House(player);
                     currentScene.displayScene();
                 } else {
                     break;

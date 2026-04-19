@@ -1,44 +1,126 @@
-import java.util.Scanner;
+public class Intro extends Scene {
 
-public class Intro {
+    private String wakingUp;
+    private String transportOption;
 
-    String wakingUp = """
-    You wake up up in the dark of you 221B Baker Street flat. 
-    As you pick up the phone as you hear Detective Inspector Lestrade 
-    tell you there has been another death that he wants you to come look at. 
-    You get out of bed and get ready to go to the crime scene. 
-    You grab your coat, hat, and John Watson, heading out the door.
-    """;
-    String transportOption = "How would you like to get to the crime scene? You can take a cab or walk";    
+    private boolean walkingPath;
+    private boolean suitcaseFound;
+    private boolean lockFound;
+    private boolean lockChecked;
+    private boolean suitcaseTaken;
 
-    public static void main(String[] args) {
-        Intro intro = new Intro();
-        System.out.println(intro.wakingUp);
-        System.out.println(intro.transportOption);
-        Scanner input = new Scanner(System.in);
-        String transportChoice = input.nextLine();
+    public Intro() {
+        super("Intro", "You are in 221B Baker Street.");
+
+        wakingUp = """
+        You wake up in the dark of your 221B Baker Street flat.
+        As you pick up the phone, you hear Detective Inspector Lestrade
+        tell you there has been another death that he wants you to come look at.
+        You get out of bed and get ready to go to the crime scene.
+        You grab your coat, hat, and John Watson, heading out the door.
+        """;
+
+        transportOption = "How would you like to get to the crime scene? You can take a cab or walk";
+
+        walkingPath = false;
+        suitcaseFound = false;
+        lockFound = false;
+        lockChecked = false;
+        suitcaseTaken = false;
+    }
+
+    public void showIntroText() {
+        System.out.println(wakingUp);
+        System.out.println(transportOption);
+    }
+
+    public void chooseTransport(String transportChoice) {
         if (transportChoice.equalsIgnoreCase("cab")) {
-            System.out.println("You hail a cab and head to the crime scene. You spot a pink suitcase in an alleyway but it's too far away to investigate.");
-        } else if (transportChoice.equalsIgnoreCase("walk")) {
-            System.out.println("You decide to walk to the crime scene. As you walk, you notice a pink suitcase in an alleyway. Do you want to investigate it? (yes/no)");
-            String investigateChoice = input.nextLine();
-            if (investigateChoice.equalsIgnoreCase("yes")) {
-                System.out.println("What do you notice?");
-                // add an action look around code to allow the player to investigate the suitcase and discover clues.
-                
-            } else {
-                System.out.println("You decide not to investigate the suitcase and continue to the crime scene.");
-            }
-        } else {
+            walkingPath = false;
+            System.out.println("You hail a cab and head to the crime scene.");
+            System.out.println("You spot a pink suitcase in an alleyway, but it is too far away to investigate.");
+            completeScene();
+        } 
+        else if (transportChoice.equalsIgnoreCase("walk")) {
+            walkingPath = true;
+            System.out.println("You decide to walk to the crime scene.");
+            System.out.println("As you walk, something catches your eye in a nearby alley.");
+            System.out.println("Try: look");
+        } 
+        else {
             System.out.println("Invalid choice. Please choose 'cab' or 'walk'.");
         }
-        input.close();
     }
 
+    @Override
+    public void lookAround() {
+        setLookedAround(true);
 
-
-
+        if (walkingPath) {
+            if (!suitcaseFound) {
+                System.out.println("You take a careful look around the alley.");
+                System.out.println("You notice a pink suitcase sitting by itself near the wall.");
+                suitcaseFound = true;
+            } else {
+                System.out.println("You look around again, but nothing else stands out beyond the suitcase.");
+            }
+        } else {
+            System.out.println("221B Baker Street is dim and cluttered.");
+            System.out.println("Watson is waking up, and Lestrade's call still lingers in your mind.");
+        }
     }
 
+    @Override
+    public void lookAround(String target) {
+        if (!hasLookedAround()) {
+            System.out.println("You should look around first before focusing on something specific.");
+            return;
+        }
 
+        if (target.equalsIgnoreCase("suitcase")) {
+            if (suitcaseFound && !lockFound) {
+                System.out.println("It is a pink suitcase with a lock on it.");
+                lockFound = true;
+            } else if (suitcaseFound) {
+                System.out.println("You do not notice anything else about the suitcase.");
+            } else {
+                System.out.println("There is no suitcase here.");
+            }
+        } 
+        else if (target.equalsIgnoreCase("lock")) {
+            if (lockFound && !lockChecked) {
+                System.out.println("The lock uses a five-letter code.");
+                lockChecked = true;
+            } else if (lockFound) {
+                System.out.println("You do not notice anything else about the lock.");
+            } else {
+                System.out.println("You have not noticed a lock yet.");
+            }
+        } 
+        else {
+            System.out.println("You do not notice anything special about the " + target + ".");
+        }
+    }
 
+    public void takeSuitcase() {
+        if (suitcaseFound && !suitcaseTaken) {
+            System.out.println("You take the suitcase with you.");
+            suitcaseTaken = true;
+        } else if (suitcaseTaken) {
+            System.out.println("You already took the suitcase.");
+        } else {
+            System.out.println("There is no suitcase here to take.");
+        }
+    }
+
+    public void leaveSuitcase() {
+        if (suitcaseFound && !suitcaseTaken) {
+            System.out.println("You decide to leave the suitcase and continue on.");
+            completeScene();
+        } else if (suitcaseTaken) {
+            System.out.println("You already took the suitcase.");
+        } else {
+            System.out.println("There is no suitcase here to leave.");
+        }
+    }
+}

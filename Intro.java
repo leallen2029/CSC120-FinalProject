@@ -39,6 +39,7 @@ public class Intro extends Scene {
             walkingPath = false;
             System.out.println("You hail a cab and head to the crime scene.");
             System.out.println("You spot a pink suitcase in an alleyway, but it is too far away to investigate.");
+            System.out.println("You have arrived at the crime scene, and Lestrade is waiting for you.");
             completeScene();
         } 
         else if (transportChoice.equalsIgnoreCase("walk")) {

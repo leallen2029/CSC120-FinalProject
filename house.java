@@ -113,7 +113,7 @@ public class House extends Scene {
     }
     public void leave(String choice) {
         if (!location.equals("murderroom")) {
-            System.out.println("You can only leave from the murder room.");
+            System.out.println("Are you ready to leave? You can 'run' or 'walk' out with Watson.");
             return;
         }
 
@@ -127,12 +127,12 @@ public class House extends Scene {
                 completeScene();
             }
         } 
-        else if (choice.equalsIgnoreCase("watson")) {
+        else if (choice.equalsIgnoreCase("walk")) {
             System.out.println("You leave calmly with Watson, discussing the case as you go.");
             completeScene();
         } 
         else {
-            System.out.println("Leave how? (leave run / leave watson)");
+            System.out.println("Leave how? (leave run / walk)");
         }
     }
 

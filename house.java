@@ -3,8 +3,8 @@ public class House extends Scene {
     private String location;
     private boolean talkedToLestrade;
 
-    public House() {
-        super("House", "You arrive outside the house where the death occurred.");
+    public House(Player player) {
+        super("House", "You arrive outside the house where the death occurred.", player);
         location = "outside";
         talkedToLestrade = false;
 

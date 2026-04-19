@@ -10,10 +10,10 @@ public class Intro extends Scene {
     private boolean suitcaseTaken;
 
     public Intro() {
-        super("Intro", "You are in 221B Baker Street.");
+        super("Intro", "your flat");
 
         wakingUp = """
-        You wake up in the dark of your 221B Baker Street flat.
+        You wake up in the dark of your 221B Baker Street bedroom.
         As you pick up the phone, you hear Detective Inspector Lestrade
         tell you there has been another death that he wants you to come look at.
         You get out of bed and get ready to go to the crime scene.

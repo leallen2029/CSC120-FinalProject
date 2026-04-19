@@ -8,6 +8,7 @@ public class Intro extends Scene {
     private boolean lockFound;
     private boolean lockChecked;
     private boolean suitcaseTaken;
+    private boolean transportChosen;
 
     public Intro() {
         super("Intro", "your flat");
@@ -45,7 +46,7 @@ public class Intro extends Scene {
             walkingPath = true;
             System.out.println("You decide to walk to the crime scene.");
             System.out.println("As you walk, something catches your eye in a nearby alley.");
-            System.out.println("Try: look");
+            System.out.println("Try: look around");
         } 
         else {
             System.out.println("Invalid choice. Please choose 'cab' or 'walk'.");
@@ -121,6 +122,34 @@ public class Intro extends Scene {
             System.out.println("You already took the suitcase.");
         } else {
             System.out.println("There is no suitcase here to leave.");
+        }
+    }
+    @Override
+    public void go() {
+        System.out.println("You continue toward the crime scene.");
+        completeScene();
+    }
+
+    @Override
+    public void handleCommand(String command) {
+        if (!transportChosen) {
+            if (command.equalsIgnoreCase("cab") || command.equalsIgnoreCase("walk")) {
+                chooseTransport(command);
+                transportChosen = true;
+            } else {
+                System.out.println("Type 'cab' or 'walk' to choose how you travel.");
+            }
+            return;
+        }
+
+        if (command.equalsIgnoreCase("take suitcase")) {
+            takeSuitcase();
+        } 
+        else if (command.equalsIgnoreCase("leave suitcase")) {
+            leaveSuitcase();
+        } 
+        else {
+            super.handleCommand(command);
         }
     }
 }

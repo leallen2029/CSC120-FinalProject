@@ -61,5 +61,24 @@ public class Scene {
     public boolean hasLookedAround() {
         return hasLookedAround;
     }
-  
+    public void go() {
+    System.out.println("You decide to continue.");
+    completeScene();
+}
+    public void handleCommand(String command) {
+        if (command.equalsIgnoreCase("look")) {
+            lookAround();
+        } 
+        else if (command.startsWith("look around ")) {
+            String target = command.substring(12);
+            lookAround(target);
+        } 
+        else if (command.equalsIgnoreCase("go") || command.equalsIgnoreCase("continue")) {
+            go();
+        } 
+        else {
+            System.out.println("Unknown command.");
+        }
+    }
+    
 }

@@ -11,7 +11,7 @@ public class Intro extends Scene {
     private boolean transportChosen;
 
     public Intro() {
-        super("Intro", "You wake up in the dark of your 221B Baker Street bedroom.");
+        super("Intro", "You wake up in the dark of your 221B Baker Street flat.");
 
         wakingUp = """
         As you pick up the phone, you hear Detective Inspector Lestrade
@@ -45,7 +45,7 @@ public class Intro extends Scene {
             walkingPath = true;
             System.out.println("You decide to walk to the crime scene.");
             System.out.println("As you walk, something catches your eye in a nearby alley.");
-            System.out.println("Try: look around");
+            System.out.println("You might want to look around.");
         } 
         else {
             System.out.println("Invalid choice. Please choose 'cab' or 'walk'.");
@@ -131,6 +131,8 @@ public class Intro extends Scene {
 
     @Override
     public void handleCommand(String command) {
+
+        // FIRST: handle cab/walk
         if (!transportChosen) {
             if (command.equalsIgnoreCase("cab") || command.equalsIgnoreCase("walk")) {
                 chooseTransport(command);
@@ -138,17 +140,28 @@ public class Intro extends Scene {
             } else {
                 System.out.println("Type 'cab' or 'walk' to choose how you travel.");
             }
-            return;
+            return; // 
         }
 
-        if (command.equalsIgnoreCase("take suitcase")) {
+        // THEN: normal commands
+        if (command.equalsIgnoreCase("look around")) {
+            lookAround(); 
+        } 
+        else if (command.startsWith("inspect ")) {
+            String target = command.substring(8);
+            lookAround(target);
+        } 
+        else if (command.equalsIgnoreCase("take suitcase")) {
             takeSuitcase();
         } 
         else if (command.equalsIgnoreCase("leave suitcase")) {
             leaveSuitcase();
         } 
+        else if (command.equalsIgnoreCase("go") || command.equalsIgnoreCase("continue")) {
+            go();
+        } 
         else {
-            super.handleCommand(command);
+            System.out.println("Unknown command.");
         }
     }
 }

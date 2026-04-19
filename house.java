@@ -111,6 +111,30 @@ public class House extends Scene {
             System.out.println("There is nowhere else to explore right now.");
         }
     }
+    public void leave(String choice) {
+        if (!location.equals("murderroom")) {
+            System.out.println("You can only leave from the murder room.");
+            return;
+        }
+
+        if (choice.equalsIgnoreCase("run")) {
+            System.out.println("You rush out of the house, your mind racing.");
+
+            if (getPlayer().hasTookCab()) {
+                System.out.println("As you reach the street, you remember the pink suitcase you saw from the cab.");
+                System.out.println("You can 'return suitcase' or 'leave watson'.");
+            } else {
+                completeScene();
+            }
+        } 
+        else if (choice.equalsIgnoreCase("watson")) {
+            System.out.println("You leave calmly with Watson, discussing the case as you go.");
+            completeScene();
+        } 
+        else {
+            System.out.println("Leave how? (leave run / leave watson)");
+        }
+    }
 
     @Override
     public void go() {

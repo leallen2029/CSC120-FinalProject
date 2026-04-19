@@ -35,19 +35,23 @@ public class Intro extends Scene {
     }
 
     public void chooseTransport(String transportChoice) {
-        if (transportChoice.equalsIgnoreCase("cab")) {
-            walkingPath = false;
-            System.out.println("You hail a cab and head to the crime scene.");
-            System.out.println("You spot a pink suitcase in an alleyway, but it is too far away to investigate.");
-            System.out.println("You have arrived at the crime scene.");
-            completeScene();
-        } 
-        else if (transportChoice.equalsIgnoreCase("walk")) {
-            walkingPath = true;
-            System.out.println("You decide to walk to the crime scene.");
-            System.out.println("As you walk, something catches your eye in a nearby alley.");
-            System.out.println("You might want to look around.");
-        } 
+    if (transportChoice.equalsIgnoreCase("cab")) {
+        walkingPath = false;
+        getPlayer().setTookCab(true);
+
+        System.out.println("You hail a cab and head to the crime scene.");
+        System.out.println("You spot a pink suitcase in an alleyway, but it is too far away to inspect.");
+        System.out.println("You have arrived at the crime scene.");
+        completeScene();
+    }
+    else if (transportChoice.equalsIgnoreCase("walk")) {
+        walkingPath = true;
+        getPlayer().setTookCab(false);
+
+        System.out.println("You decide to walk to the crime scene.");
+        System.out.println("As you walk, something catches your eye in a nearby alley.");
+        System.out.println("You might want to look around.");
+}
         else {
             System.out.println("Invalid choice. Please choose 'cab' or 'walk'.");
         }

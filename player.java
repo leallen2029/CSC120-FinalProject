@@ -5,10 +5,20 @@ public class Player {
     private ArrayList<String> inventory;
     private ArrayList<String> journal;
     private final int MAX_ITEMS = 5;
+    private boolean tookCab;
 
     public Player() {
         inventory = new ArrayList<>();
         journal = new ArrayList<>();
+        tookCab = false;
+    }
+
+    public void setTookCab(boolean tookCab) {
+        this.tookCab = tookCab;
+}
+
+    public boolean hasTookCab() {
+        return tookCab;
     }
 
     public boolean takeItem(String item) {

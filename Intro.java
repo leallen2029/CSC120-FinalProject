@@ -10,9 +10,8 @@ public class Intro extends Scene {
     private boolean suitcaseTaken;
     private boolean transportChosen;
 
-    public Intro() {
-        super("Intro", "You wake up in the dark of your 221B Baker Street flat.");
-
+    public Intro(Player player) {
+    super("Intro", "You wake up in the dark of your 221B Baker Street flat.", player);
         wakingUp = """
         As you pick up the phone, you hear Detective Inspector Lestrade
         tell you there has been another death that he wants you to come look at.
@@ -27,6 +26,7 @@ public class Intro extends Scene {
         lockFound = false;
         lockChecked = false;
         suitcaseTaken = false;
+        transportChosen = false;
     }
 
     public void showIntroText() {
@@ -72,9 +72,9 @@ public class Intro extends Scene {
     }
 
     @Override
-    public void lookAround(String target) {
+    public void inspect(String target) {
         if (!hasLookedAround()) {
-            System.out.println("You should look around first before focusing on something specific.");
+            System.out.println("You should look around first before inspecting anything.");
             return;
         }
 
@@ -99,7 +99,7 @@ public class Intro extends Scene {
             }
         } 
         else {
-            System.out.println("You do not notice anything special about the " + target + ".");
+            System.out.println("There is nothing important about the " + target + ".");
         }
     }
 
@@ -107,6 +107,8 @@ public class Intro extends Scene {
         if (suitcaseFound && !suitcaseTaken) {
             System.out.println("You take the suitcase with you.");
             suitcaseTaken = true;
+            getPlayer().takeItem("suitcase");
+
         } else if (suitcaseTaken) {
             System.out.println("You already took the suitcase.");
         } else {
@@ -124,6 +126,7 @@ public class Intro extends Scene {
             System.out.println("There is no suitcase here to leave.");
         }
     }
+
     @Override
     public void go() {
         System.out.println("You continue toward the crime scene.");
@@ -133,7 +136,6 @@ public class Intro extends Scene {
     @Override
     public void handleCommand(String command) {
 
-        // FIRST: handle cab/walk
         if (!transportChosen) {
             if (command.equalsIgnoreCase("cab") || command.equalsIgnoreCase("walk")) {
                 chooseTransport(command);
@@ -141,16 +143,15 @@ public class Intro extends Scene {
             } else {
                 System.out.println("Type 'cab' or 'walk' to choose how you travel.");
             }
-            return; // 
+            return;
         }
 
-        // THEN: normal commands
-        if (command.equalsIgnoreCase("look around")) {
-            lookAround(); 
+        if (command.equalsIgnoreCase("look") || command.equalsIgnoreCase("look around")) {
+            lookAround();
         } 
         else if (command.startsWith("inspect ")) {
             String target = command.substring(8);
-            lookAround(target);
+            inspect(target);
         } 
         else if (command.equalsIgnoreCase("take suitcase")) {
             takeSuitcase();

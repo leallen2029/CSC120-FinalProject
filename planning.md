@@ -53,7 +53,7 @@ ending options
 you solve the crime as sherlock and preserve his honor
 you solve the crime but convict the wrong person
 you die
-
+     
 
 ohhh im going to make some general actions and override them in the instances
 

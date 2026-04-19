@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-
-        Scene currentScene = new Intro();
+        Player player = new Player();
+        Scene currentScene = new Intro(player);
         currentScene.displayScene();
         ((Intro) currentScene).showIntroText();
 

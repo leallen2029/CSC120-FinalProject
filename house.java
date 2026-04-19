@@ -40,7 +40,7 @@ public class House extends Scene {
     }
 
     @Override
-    public void lookAround(String target) {
+    public void inspect(String target) {
         if (!hasLookedAround()) {
             System.out.println("Look around first.");
             return;
@@ -49,22 +49,25 @@ public class House extends Scene {
         if (location.equals("murderroom")) {
             if (target.equalsIgnoreCase("body")) {
                 System.out.println("The body lies still. Something about it feels wrong.");
-                System.out.println("What else stand out to you about the body? You can inspect specific parts of the body, like the hands or clothing.");
-                
-                // ADD MORE BODY EXAMINATION HERE LATER
-                // Example future ideas:
-                // - hands
-                // - face
-                // - clothing
-                // - ring
-                // - pill bottle
+                System.out.println("What else stands out to you about the body? You can inspect specific parts of the body, like the hands, face, nails, or clothing.");
             } 
             else if (target.equalsIgnoreCase("floor")) {
-                System.out.println("There are marks on the floor next to the body. It looks like someoen carved the letters RACHE into the floor. How did they get there?");
-                if (target.equalsIgnoreCase("nails")){
-                    System.out.println("You look closely at the victim's nails and notice they are broken, it appears as if she carving the letters was the last thing she did.");
-                }
+                System.out.println("There are marks on the floor next to the body.");
+                System.out.println("It looks like someone carved the letters RACHE into the floor. How did they get there?");
             } 
+            else if (target.equalsIgnoreCase("nails")) {
+                System.out.println("You look closely at the victim's nails and notice they are broken.");
+                System.out.println("It appears that carving the letters may have been the last thing she did.");
+            }
+            else if (target.equalsIgnoreCase("hands")) {
+                System.out.println("The victim's hands look strained, as if she used the last of her strength to leave something behind.");
+            }
+            else if (target.equalsIgnoreCase("face")) {
+                System.out.println("Her expression is tense and frightened, frozen in her final moment.");
+            }
+            else if (target.equalsIgnoreCase("clothing")) {
+                System.out.println("Her clothing is disordered, but not enough to suggest a direct struggle.");
+            }
             else if (target.equalsIgnoreCase("bedroom")) {
                 System.out.println("The bedroom looks disturbed, but not randomly.");
             } 
@@ -149,7 +152,7 @@ public class House extends Scene {
         } 
         else if (command.startsWith("inspect ")) {
             String target = command.substring(8);
-            lookAround(target);
+            inspect(target);
         } 
         else if (command.equalsIgnoreCase("talk lestrade")) {
             talkToLestrade();

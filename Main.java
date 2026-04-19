@@ -5,7 +5,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         Intro currentScene = new Intro();
-
+        currentScene.displayScene();
         currentScene.showIntroText(); 
 
         while (!currentScene.isCompleted()) {

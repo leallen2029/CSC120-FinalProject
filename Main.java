@@ -4,15 +4,24 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        Intro currentScene = new Intro();
+        Scene currentScene = new Intro();
         currentScene.displayScene();
-        currentScene.showIntroText(); 
+        ((Intro) currentScene).showIntroText();
 
-        while (!currentScene.isCompleted()) {
+        while (true) {
             System.out.print("\nWhat do you want to do? ");
             String command = input.nextLine();
 
             currentScene.handleCommand(command);
+
+            if (currentScene.isCompleted()) {
+                if (currentScene instanceof Intro) {
+                    currentScene = new House();
+                    currentScene.displayScene();
+                } else {
+                    break;
+                }
+            }
         }
 
         input.close();

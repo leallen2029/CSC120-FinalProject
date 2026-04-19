@@ -1,49 +1,28 @@
 public class House extends Scene {
 
     public House() {
-        super("House", "You arrive at the scene of the death.");
+        super("House", "You arrive outside the house where the death occurred.");
+        System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred. What do you do now?");
     }
 
     @Override
     public void lookAround() {
-        super.lookAround();
-        System.out.println("You see the outside of the house, the inside, a staircase, a bedroom, something on the floor, and the body.");
+        setLookedAround(true);
+
+        System.out.println("John Watson looks around and says, 'This place gives me the creeps.'");
+        System.out.println("Sergeant Donovan is walking around the yard, looking for clues.");
+        System.out.println("You notice the front door. It’s slightly open.");
+        System.out.println("You can go inside now.");
     }
 
     @Override
-    public void inspect(String target) {
-
+    public void go() {
         if (!hasLookedAround()) {
             System.out.println("You should look around first.");
             return;
         }
 
-        if (target.equalsIgnoreCase("body")) {
-            System.out.println("The body lies still. Something about it feels off.");
-        }
-
-        else if (target.equalsIgnoreCase("floor")) {
-            System.out.println("There are marks on the floor. They look intentional.");
-        }
-
-        else if (target.equalsIgnoreCase("bedroom")) {
-            System.out.println("The bedroom looks disturbed, but not randomly.");
-        }
-
-        else if (target.equalsIgnoreCase("stairs")) {
-            System.out.println("The stairs creak. Someone was here recently.");
-        }
-
-        else if (target.equalsIgnoreCase("outside")) {
-            System.out.println("Outside, everything seems normal. Too normal.");
-        }
-
-        else if (target.equalsIgnoreCase("inside")) {
-            System.out.println("Inside, the air feels heavy. Something happened here.");
-        }
-
-        else {
-            System.out.println("Nothing important there.");
-        }
+        System.out.println("You enter the house.");
+            
     }
 }

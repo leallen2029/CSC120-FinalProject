@@ -123,6 +123,16 @@ public class House extends Scene {
             if (getPlayer().hasTookCab()) {
                 System.out.println("As you reach the street, you remember the pink suitcase you saw from the cab.");
                 System.out.println("You can 'return suitcase' or 'leave watson'.");
+                if (choice.equalsIgnoreCase("return suitcase")) {
+                    System.out.println("You rush back into the house to grab the suitcase");
+                    
+                } else if (choice.equalsIgnoreCase("leave watson")) {
+                    System.out.println("You leave Watson behind and run out of the house alone.");
+                    System.out.println("Your mind is racing with thoughts about the case, but you feel a pang of guilt for leaving Watson behind.");
+                    System.out.println("The case remains unsolved, and you can't shake the feeling that you should have stayed with Watson.");
+                } else {
+                    System.out.println("Unknown choice. You end up standing outside the house, unsure of what to do next.");
+                }
             } else {
                 completeScene();
             }

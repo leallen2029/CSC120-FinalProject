@@ -11,6 +11,7 @@ public class BakerSt extends Scene {
 
     public void showArrival() {
         if (arrivalShown) return;
+        
 
         if (getPlayer().hasReturnedToSuitcase()) {
             System.out.println("You return to Baker Street with the suitcase still on your mind.");

@@ -109,10 +109,9 @@ public class Intro extends Scene {
 
     public void takeSuitcase() {
         if (suitcaseFound && !suitcaseTaken) {
-            System.out.println("You take the suitcase with you.");
-            suitcaseTaken = true;
-            getPlayer().takeItem("suitcase");
-
+            if (getPlayer().takeItem("suitcase")) {
+                suitcaseTaken = true;
+            }
         } else if (suitcaseTaken) {
             System.out.println("You already took the suitcase.");
         } else {

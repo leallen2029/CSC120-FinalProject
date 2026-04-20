@@ -1,16 +1,19 @@
 import java.util.ArrayList;
 
 public class Player {
-
+    private boolean tookCab;
+    private boolean ranOut;
+    private boolean returnedToSuitcase;
     private ArrayList<String> inventory;
     private ArrayList<String> journal;
     private final int MAX_ITEMS = 5;
-    private boolean tookCab;
 
     public Player() {
         inventory = new ArrayList<>();
         journal = new ArrayList<>();
         tookCab = false;
+        ranOut = false;
+        returnedToSuitcase = false;
     }
 
     public void setTookCab(boolean tookCab) {
@@ -76,5 +79,20 @@ public class Player {
                 System.out.println((i + 1) + ". " + journal.get(i));
             }
         }
+    }
+    public void setRanOut(boolean ranOut) {
+    this.ranOut = ranOut;
+}
+
+    public boolean hasRanOut() {
+        return ranOut;
+    }
+
+    public void setReturnedToSuitcase(boolean returnedToSuitcase) {
+        this.returnedToSuitcase = returnedToSuitcase;
+    }
+
+    public boolean hasReturnedToSuitcase() {
+        return returnedToSuitcase;
     }
 }

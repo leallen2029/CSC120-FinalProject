@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Player player = new Player();
+
         Scene currentScene = new Intro(player);
         currentScene.displayScene();
         ((Intro) currentScene).showIntroText();
@@ -18,7 +19,13 @@ public class Main {
                 if (currentScene instanceof Intro) {
                     currentScene = new House(player);
                     currentScene.displayScene();
-                } else {
+                } 
+                else if (currentScene instanceof House) {
+                    currentScene = new BakerSt(player);
+                    currentScene.displayScene();
+                    ((BakerSt) currentScene).showArrival();
+                } 
+                else {
                     break;
                 }
             }

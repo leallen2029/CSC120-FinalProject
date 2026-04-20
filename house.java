@@ -2,11 +2,13 @@ public class House extends Scene {
 
     private String location;
     private boolean talkedToLestrade;
+    private boolean waitingForRunChoice;
 
     public House(Player player) {
         super("House", "You arrive outside the house where the death occurred.", player);
         location = "outside";
         talkedToLestrade = false;
+        waitingForRunChoice = false;
 
         System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred.");
     }
@@ -113,36 +115,50 @@ public class House extends Scene {
     }
     public void leave(String choice) {
         if (!location.equals("murderroom")) {
-            System.out.println("Are you ready to leave? You can 'run' or 'walk' out with Watson.");
+            System.out.println("You can only leave from the murder room.");
             return;
         }
 
-        if (choice.equalsIgnoreCase("run")) {
-            System.out.println("You rush out of the house, your mind racing.");
+        if (!waitingForRunChoice) {
+            if (choice.equalsIgnoreCase("run")) {
+                System.out.println("You rush out of the house, your mind racing.");
 
-            if (getPlayer().hasTookCab()) {
-                System.out.println("As you reach the street, you remember the pink suitcase you saw from the cab.");
-                System.out.println("You can 'return suitcase' or 'leave watson'.");
-                if (choice.equalsIgnoreCase("return suitcase")) {
-                    System.out.println("You rush back into the house to grab the suitcase");
-                    
-                } else if (choice.equalsIgnoreCase("leave watson")) {
-                    System.out.println("You leave Watson behind and run out of the house alone.");
-                    System.out.println("Your mind is racing with thoughts about the case, but you feel a pang of guilt for leaving Watson behind.");
-                    System.out.println("The case remains unsolved, and you can't shake the feeling that you should have stayed with Watson.");
+                getPlayer().setRanOut(true);
+
+                if (getPlayer().hasTookCab()) {
+                    waitingForRunChoice = true;
+                    System.out.println("As you reach the street, you remember the pink suitcase you saw from the cab.");
+                    System.out.println("Type 'return suitcase' or 'leave watson'.");
                 } else {
-                    System.out.println("Unknown choice. You end up standing outside the house, unsure of what to do next.");
+                    completeScene();
                 }
-            } else {
+            } 
+            else if (choice.equalsIgnoreCase("walk")) {
+                System.out.println("You leave calmly with Watson, discussing the case as you go.");
+                getPlayer().setRanOut(false);
+                getPlayer().setReturnedToSuitcase(false);
                 completeScene();
+            } 
+            else {
+                System.out.println("You can only leave from the murder room.");
             }
         } 
-        else if (choice.equalsIgnoreCase("walk")) {
-            System.out.println("You leave calmly with Watson, discussing the case as you go.");
-            completeScene();
-        } 
         else {
-            System.out.println("Leave how? (leave run / walk)");
+            if (choice.equalsIgnoreCase("return suitcase")) {
+                System.out.println("You decide to go back for the suitcase lead.");
+                getPlayer().setReturnedToSuitcase(true);
+                waitingForRunChoice = false;
+                completeScene();
+            } 
+            else if (choice.equalsIgnoreCase("leave watson")) {
+                System.out.println("You decide not to go back for the suitcase and leave with Watson instead.");
+                getPlayer().setReturnedToSuitcase(false);
+                waitingForRunChoice = false;
+                completeScene();
+            } 
+            else {
+                System.out.println("Type 'return suitcase' or 'leave watson'.");
+            }
         }
     }
 
@@ -194,6 +210,16 @@ public class House extends Scene {
         else if (command.equalsIgnoreCase("explore")) {
             explore();
         } 
+        else if (command.startsWith("leave ")) {
+            String choice = command.substring(6);
+            leave(choice);
+        }
+        else if (command.equalsIgnoreCase("return suitcase")) {
+            leave("return suitcase");
+        }
+        else if (command.equalsIgnoreCase("leave watson")) {
+            leave("leave watson");
+        }
         else if (command.equalsIgnoreCase("go") 
                 || command.equalsIgnoreCase("continue") 
                 || command.equalsIgnoreCase("go upstairs")) {

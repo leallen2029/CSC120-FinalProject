@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 
 public class Player {
+    private boolean toldWatson;
+    private boolean toldPolice;
+    private boolean solvedSuitcase;
     private boolean tookCab;
     private boolean ranOut;
     private boolean returnedToSuitcase;
@@ -94,5 +97,28 @@ public class Player {
 
     public boolean hasReturnedToSuitcase() {
         return returnedToSuitcase;
+    }
+    public void setToldWatson(boolean toldWatson) {
+    this.toldWatson = toldWatson;
+}
+
+    public boolean hasToldWatson() {
+        return toldWatson;
+    }
+
+    public void setToldPolice(boolean toldPolice) {
+        this.toldPolice = toldPolice;
+    }
+
+    public boolean hasToldPolice() {
+        return toldPolice;
+    }
+
+    public void setSolvedSuitcase(boolean solvedSuitcase) {
+        this.solvedSuitcase = solvedSuitcase;
+    }
+
+    public boolean hasSolvedSuitcase() {
+        return solvedSuitcase;
     }
 }

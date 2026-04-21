@@ -3,7 +3,7 @@ public class House extends Scene {
     private String location;
     private boolean talkedToLestrade;
     private boolean waitingForRunChoice;
-
+/// sets location and tracks the player's interactions with Lestrade, as well as their choice to run out of the house and whether they go back for the suitcase or not.
     public House(Player player) {
         super("House", "You arrive outside the house where the death occurred.", player);
         location = "outside";
@@ -12,7 +12,7 @@ public class House extends Scene {
 
         System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred.");
     }
-
+/// handles the player's interactions with the house, including looking around, inspecting specific details, talking to Lestrade, exploring the downstairs area, leaving the house, and moving through the different areas of the house. The player's choices and interactions will affect how the scene progresses and what information they uncover.
     @Override
     public void lookAround() {
         setLookedAround(true);
@@ -40,7 +40,7 @@ public class House extends Scene {
             System.out.println("You notice the body, the floor, and the bedroom space around you.");
         }
     }
-
+/// ensures the player knows to look around before inspecting and provides different descriptions based on the player's location in the house and what they choose to inspect.
     @Override
     public void inspect(String target) {
         if (!hasLookedAround()) {
@@ -99,7 +99,7 @@ public class House extends Scene {
             System.out.println("Lestrade has nothing new to add right now.");
         }
     }
-
+/// allows the player to explore the downstairs area and discover more information about the case, but only after talking to Lestrade for the first time. After that, they can explore again but won't find anything new.
     public void explore() {
         if (location.equals("downstairs") && !talkedToLestrade) {
             System.out.println("As you try to move further in, Lestrade steps into your path.");
@@ -113,6 +113,7 @@ public class House extends Scene {
             System.out.println("There is nowhere else to explore right now.");
         }
     }
+/// deals with the player leaving the house, ensuring they uncover at least some things    
     public void leave(String choice) {
         if (!location.equals("murderroom")) {
             System.out.println("You can only leave from the murder room.");
@@ -161,7 +162,7 @@ public class House extends Scene {
             }
         }
     }
-
+/// changes go() to fit the house situation
     @Override
     public void go() {
         if (location.equals("outside")) {

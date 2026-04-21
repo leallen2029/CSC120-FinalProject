@@ -1,5 +1,6 @@
 public class BakerSt extends Scene {
 
+/// tracks the state of various events and items in the scene
     private boolean arrivalShown;
     private boolean suitcaseOpened;
     private boolean phoneFound;
@@ -12,6 +13,7 @@ public class BakerSt extends Scene {
     private boolean lostSuitcaseToPolice;
     private boolean deductionMade;
 
+/// initializes the scene and sets the initial state of all events and items
     public BakerSt(Player player) {
         super("Baker Street", "You arrive back at 221B Baker Street.", player);
 
@@ -27,7 +29,7 @@ public class BakerSt extends Scene {
         lostSuitcaseToPolice = false;
         deductionMade = false;
     }
-
+/// shows the arrival text and sets the stage for the player's investigation in Baker Street, including the importance of the suitcase and the phone, as well as the presence of Watson and the police. The player's interactions with these elements will affect how the scene progresses and what information they uncover.
     public void showArrival() {
         if (arrivalShown) {
             return;
@@ -48,7 +50,7 @@ public class BakerSt extends Scene {
         System.out.println("You should probably look around and think.");
         arrivalShown = true;
     }
-
+/// handles the player's interactions in Baker Street, including looking around, inspecting specific details, opening the suitcase and phone, talking to Watson, hiding the suitcase from Watson, surrendering the suitcase to the police, thinking through the clues, and moving on to the next scene. The player's choices and interactions will affect how the scene progresses and what information they uncover.
     @Override
     public void lookAround() {
         setLookedAround(true);
@@ -71,7 +73,7 @@ public class BakerSt extends Scene {
             System.out.println("Watson is here with you, watching your reaction carefully.");
         }
     }
-
+/// ensures the player knows to look around before inspecting and provides different descriptions based on what they choose to inspect, as well as the consequences of inspecting certain items like the suitcase and phone.
     @Override
     public void inspect(String target) {
         if (!hasLookedAround()) {
@@ -117,7 +119,7 @@ public class BakerSt extends Scene {
             System.out.println("Nothing important stands out about the " + target + ".");
         }
     }
-
+/// handles the player's attempt to open the suitcase and phone, ensuring they have the necessary items and have made the necessary deductions before allowing them to open these key items. The consequences of opening these items will affect how the scene progresses and what information they uncover.
     public void open(String target) {
         if (target.equalsIgnoreCase("suitcase")) {
             if (!getPlayer().hasItem("suitcase")) {
@@ -168,6 +170,7 @@ public class BakerSt extends Scene {
         }
     }
 
+/// allows the player to tell Watson about the suitcase and its contents, which will affect how Watson interacts with the player and how the police become involved in the case. The player can also choose to hide the suitcase from Watson, which will affect their relationship with him and how the investigation proceeds.
     public void tellWatson() {
         if (!watsonArrived) {
             System.out.println("Watson is not here yet.");
@@ -191,6 +194,7 @@ public class BakerSt extends Scene {
         }
     }
 
+/// allows the player to hide the suitcase from Watson, which will affect their relationship with him and how the investigation proceeds. If the player chooses to hide the suitcase, they will have to deal with the consequences of keeping this information from Watson and potentially losing his trust.
     public void hideSuitcase() {
         if (!watsonArrived) {
             System.out.println("There is no reason to hide it yet.");
@@ -230,6 +234,7 @@ public class BakerSt extends Scene {
         lostSuitcaseToPolice = true;
     }
 
+ /// helps the player to think through the clues they have uncovered in Baker Street, including the significance of the suitcase and phone, the implications of telling Watson or hiding the suitcase, and how these elements connect to the cabbie and the overall case. The player's deductions will affect how they approach the final confrontation in the next scene.
     public void think() {
         System.out.println("You force yourself to connect the pieces.");
 
@@ -247,6 +252,7 @@ public class BakerSt extends Scene {
         }
     }
 
+/// deals with go() for this situation
     @Override
     public void go() {
         if (lostSuitcaseToPolice) {

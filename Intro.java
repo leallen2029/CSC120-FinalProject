@@ -8,7 +8,7 @@ public class Intro extends Scene {
     private boolean lockChecked;
     private boolean suitcaseTaken;
     private boolean transportChosen;
-
+/// sets locaiton and gives player the option to walk or take a cab, with different consequences for each choice. Also introduces the pink suitcase as a potential clue that can be found if the player chooses to walk.
     public Intro(Player player) {
     super("Intro", "You wake up in the dark of your 221B Baker Street flat.", player);
         wakingUp = """
@@ -19,7 +19,7 @@ public class Intro extends Scene {
         """;
 
         transportOption = "How would you like to get to the crime scene? You can take a cab or walk";
-
+/// sets options flase so you can discover these things as you play through the scene, and they will be used to determine what happens in later scenes based on the player's choices in this scene.
         walkingPath = false;
         suitcaseFound = false;
         lockFound = false;
@@ -27,12 +27,12 @@ public class Intro extends Scene {
         suitcaseTaken = false;
         transportChosen = false;
     }
-
+/// displays text
     public void showIntroText() {
         System.out.println(wakingUp);
         System.out.println(transportOption);
     }
-
+/// handles the player's choice of transport and the consequences of that choice, as well as allowing the player to look around and discover the suitcase if they chose to walk.
     public void chooseTransport(String transportChoice) {
     if (transportChoice.equalsIgnoreCase("cab")) {
         walkingPath = false;
@@ -55,7 +55,7 @@ public class Intro extends Scene {
             System.out.println("Invalid choice. Please choose 'cab' or 'walk'.");
         }
     }
-
+/// deals with commands on the way to the house
     @Override
     public void lookAround() {
         setLookedAround(true);
@@ -73,7 +73,7 @@ public class Intro extends Scene {
             System.out.println("Watson is waking up, and Lestrade's call still lingers in your mind.");
         }
     }
-
+/// ensures the player knows to look around before inspecting 
     @Override
     public void inspect(String target) {
         if (!hasLookedAround()) {
@@ -105,7 +105,7 @@ public class Intro extends Scene {
             System.out.println("There is nothing important about the " + target + ".");
         }
     }
-
+/// allows the player to take the suitcase if they found it, and ensures they can't take it multiple times or take it if they haven't found it yet.
     public void takeSuitcase() {
         if (suitcaseFound && !suitcaseTaken) {
             if (getPlayer().takeItem("suitcase")) {
@@ -117,7 +117,7 @@ public class Intro extends Scene {
             System.out.println("There is no suitcase here to take.");
         }
     }
-
+/// allows the player to leave the suitcase if they found it but decide not to take it, and ensures they can't leave it if they haven't found it or if they already took it.
     public void leaveSuitcase() {
         if (suitcaseFound && !suitcaseTaken) {
             System.out.println("You decide to leave the suitcase and continue on.");
@@ -134,7 +134,7 @@ public class Intro extends Scene {
         System.out.println("You continue toward the crime scene.");
         completeScene();
     }
-
+/// commands on the way to house
     @Override
     public void handleCommand(String command) {
 

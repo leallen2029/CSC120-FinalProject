@@ -2,7 +2,6 @@ public class Intro extends Scene {
 
     private String wakingUp;
     private String transportOption;
-
     private boolean walkingPath;
     private boolean suitcaseFound;
     private boolean lockFound;

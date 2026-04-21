@@ -25,10 +25,16 @@ public class Main {
                     currentScene.displayScene();
                     ((BakerSt) currentScene).showArrival();
                 } 
+                else if (currentScene instanceof BakerSt) {
+                    currentScene = new CabTrap(player);
+                    currentScene.displayScene();
+                } 
                 else {
                     break;
                 }
             }
-        }input.close();
+        }
+
+        input.close();
     }
-    }
+}

@@ -31,12 +31,15 @@ public class Main {
                 else if (currentScene instanceof BakerSt) {
                     currentScene = new CabTrap(player);
                     currentScene.displayScene();
-                } 
+                    ((CabTrap) currentScene).showArrival();
+                }
                 else {
                     break;
                 }
             }
         }
+        System.out.println("\n=== GAME OVER ===");
+        
 
         input.close();
     }

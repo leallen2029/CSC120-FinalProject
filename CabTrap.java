@@ -22,8 +22,9 @@ public class CabTrap extends Scene {
 
         if (getPlayer().hasToldPolice()) {
             System.out.println("The police move in before you can act on the final clue yourself.");
-            System.out.println("By the time you arrive, the confrontation has already slipped out of your hands.");
-            System.out.println("You failed to see the case through on your own terms.");
+            System.out.println("By the time you arrive, the cabbie has disappeared into the confusion.");
+            System.out.println("You gave away the evidence too soon.");
+            System.out.println("FAIL ENDING: The case slips out of your hands.");
             endingReached = true;
             completeScene();
             arrivalShown = true;
@@ -33,6 +34,7 @@ public class CabTrap extends Scene {
         System.out.println("You have followed the trail as far as it will go.");
         System.out.println("The cabbie is waiting.");
         System.out.println("The room feels charged, as though one wrong move could end everything.");
+        System.out.println("You should look around before you confront him.");
         arrivalShown = true;
     }
 
@@ -48,6 +50,7 @@ public class CabTrap extends Scene {
         lookedAroundFinal = true;
 
         System.out.println("The cabbie stands with unsettling calm, like he expected you.");
+        System.out.println("Two pills sit between you like a dare.");
         System.out.println("The tension in the room is immediate and absolute.");
         System.out.println("This is no longer just about clues. This is the end of the hunt.");
     }
@@ -73,6 +76,10 @@ public class CabTrap extends Scene {
             System.out.println("The room offers no comfort, only pressure.");
             System.out.println("Everything has narrowed down to this single encounter.");
         }
+        else if (target.equalsIgnoreCase("pills")) {
+            System.out.println("Two pills. One choice. One trap.");
+            System.out.println("The cabbie is trying to make the ending feel like a game.");
+        }
         else {
             System.out.println("Nothing else matters as much as the man in front of you.");
         }
@@ -92,10 +99,20 @@ public class CabTrap extends Scene {
 
         confrontationStarted = true;
 
+        if (getPlayer().hasToldPolice()) {
+            System.out.println("The police took control of the evidence before you could finish the case yourself.");
+            System.out.println("The cabbie slips away, and the truth becomes harder to prove.");
+            System.out.println("FAIL ENDING: You lose the chance to solve the crime.");
+            endingReached = true;
+            completeScene();
+            return;
+        }
+
         if (!getPlayer().hasToldWatson()) {
             System.out.println("You came here without truly trusting Watson with what you knew.");
-            System.out.println("The cabbie exploits your isolation, and with no one ready to act in time, the confrontation ends in disaster.");
-            System.out.println("You die with the cabbie, and the case ends with you.");
+            System.out.println("No one is ready. No one is watching closely enough.");
+            System.out.println("The cabbie exploits your isolation, pushing the game until it is too late.");
+            System.out.println("DEATH ENDING: You die with the cabbie, and the case ends with you.");
             endingReached = true;
             completeScene();
             return;
@@ -103,18 +120,19 @@ public class CabTrap extends Scene {
 
         if (getPlayer().hasSolvedSuitcase() && getPlayer().hasToldWatson() && !getPlayer().hasToldPolice()) {
             System.out.println("You hold your ground as the final pieces click into place.");
-            System.out.println("The cabbie pushes the game as far as he dares, but this time Watson is part of the chain of events, not shut out from it.");
-            System.out.println("The confrontation breaks in your favor.");
-            System.out.println("It ends much as it should: tense, brilliant, and alive with the satisfaction of seeing the truth at the last possible second.");
-            System.out.println("You survive. The case is solved.");
+            System.out.println("The cabbie pushes the game as far as he dares.");
+            System.out.println("But this time Watson is part of the chain of events, not shut out from it.");
+            System.out.println("A shot breaks the moment.");
+            System.out.println("The confrontation ends before the cabbie can finish his trap.");
+            System.out.println("BEST ENDING: You survive. The case is solved.");
             endingReached = true;
             completeScene();
             return;
         }
 
-        System.out.println("You have enough to face him, but not enough to control the outcome cleanly.");
-        System.out.println("The confrontation slips away from certainty, and the ending feels incomplete.");
-        System.out.println("You survive, but the case never fully resolves in your favor.");
+        System.out.println("You have reached the cabbie, but the case is not fully in your control.");
+        System.out.println("You survive the confrontation, but too much remains uncertain.");
+        System.out.println("INCOMPLETE ENDING: You live, but the case never fully resolves in your favor.");
         endingReached = true;
         completeScene();
     }
@@ -138,6 +156,13 @@ public class CabTrap extends Scene {
 /// handles the player's commands in this final scene, allowing them to look around, inspect the cabbie and the room, confront the cabbie, or try to move on. The player's options and the consequences of their actions will depend on how they have navigated the case up to this point, and their choices in this scene will determine how the confrontation unfolds and what information they uncover about the cabbie and his role in the case.
     @Override
     public void handleCommand(String command) {
+        String cmd = command.toLowerCase().trim();
+
+        if (cmd.equals("help")) {
+            help();
+            return;
+        }
+
         if (!arrivalShown) {
             showArrival();
             if (endingReached) {
@@ -145,16 +170,16 @@ public class CabTrap extends Scene {
             }
         }
 
-        if (command.equalsIgnoreCase("look") || command.equalsIgnoreCase("look around")) {
+        if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         }
-        else if (command.startsWith("inspect ")) {
-            inspect(command.substring(8));
+        else if (cmd.startsWith("inspect ")) {
+            inspect(cmd.substring(8).trim());
         }
-        else if (command.equalsIgnoreCase("confront") || command.equalsIgnoreCase("face cabbie")) {
+        else if (cmd.equals("confront") || cmd.equals("face cabbie")) {
             confront();
         }
-        else if (command.equalsIgnoreCase("go") || command.equalsIgnoreCase("continue")) {
+        else if (cmd.equals("go") || cmd.equals("continue")) {
             go();
         }
         else {

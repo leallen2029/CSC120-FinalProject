@@ -128,6 +128,11 @@ public class Scene {
     public void handleCommand(String command) {
         String cmd = command.toLowerCase().trim();
 
+        // help 
+        if (cmd.equals("help")) {
+            help();
+            return;
+        }
         if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         }
@@ -142,9 +147,6 @@ public class Scene {
         else if (cmd.startsWith("talk ")) {
             String target = command.substring(5).trim();
             talk(target);
-        }
-        else if (cmd.equals("help")) {
-            help();
         }
         else if (cmd.startsWith("open ")) {
             String target = command.substring(5).trim();

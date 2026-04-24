@@ -107,45 +107,57 @@ public class Scene {
     }
 
     public void handleCommand(String command) {
-        String cmd = command.toLowerCase();
+        String cmd = command.toLowerCase().trim();
 
         if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         }
         else if (cmd.startsWith("inspect ")) {
-            String target = command.substring(8);
+            String target = command.substring(8).trim();
             inspect(target);
         }
         else if (cmd.startsWith("notice ")) {
-            String target = command.substring(7);
+            String target = command.substring(7).trim();
             notice(target);
         }
         else if (cmd.startsWith("talk ")) {
-            String target = command.substring(5);
+            String target = command.substring(5).trim();
             talk(target);
         }
         else if (cmd.startsWith("open ")) {
-            String target = command.substring(5);
+            String target = command.substring(5).trim();
             open(target);
         }
         else if (cmd.startsWith("take ")) {
-            String target = command.substring(5);
+            String target = command.substring(5).trim();
             take(target);
         }
         else if (cmd.startsWith("drop ")) {
-            String target = command.substring(5);
+            String target = command.substring(5).trim();
             drop(target);
         }
         else if (cmd.startsWith("place ")) {
-            String target = command.substring(6);
+            String target = command.substring(6).trim();
             place(target);
         }
         else if (cmd.startsWith("use ")) {
-            String target = command.substring(4);
+            String target = command.substring(4).trim();
             use(target);
         }
         else if (cmd.equals("enter")) {
             enter();
+        }
+        else if (cmd.startsWith("go ")) {
+            String direction = cmd.substring(3).trim();
+
+            if (direction.equals("north") ||
+                direction.equals("south") ||
+                direction.equals("east") ||
+                direction.equals("west")) {
+                move(direction);
+            } else {
+                System.out.println("Go where? Try north, south, east, or west.");
+            }
         }
         else if (cmd.equals("go") || cmd.equals("continue")) {
             go();
@@ -157,20 +169,8 @@ public class Scene {
             player.showJournal();
         }
         else if (cmd.startsWith("write ")) {
-            String note = command.substring(6);
+            String note = command.substring(6).trim();
             player.writeNote(note);
-        }
-        else if (cmd.contains("north")) {
-            move("north");
-        }
-        else if (cmd.contains("south")) {
-            move("south");
-        }
-        else if (cmd.contains("east")) {
-            move("east");
-        }
-        else if (cmd.contains("west")) {
-            move("west");
         }
         else {
             System.out.println("Unknown command.");

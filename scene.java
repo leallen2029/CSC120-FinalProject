@@ -17,6 +17,25 @@ public class Scene {
     public Player getPlayer() {
         return player;
     }
+    public void help() {
+        System.out.println("\nCommands you can use:");
+        System.out.println("- look OR look around");
+        System.out.println("- inspect <thing>");
+        System.out.println("- notice <thing>");
+        System.out.println("- talk <person>");
+        System.out.println("- open <thing>");
+        System.out.println("- take <thing>");
+        System.out.println("- drop <thing>");
+        System.out.println("- place <thing>");
+        System.out.println("- use <thing>");
+        System.out.println("- enter");
+        System.out.println("- go");
+        System.out.println("- go north / go south / go east / go west");
+        System.out.println("- inventory");
+        System.out.println("- journal");
+        System.out.println("- write <note>");
+        System.out.println("- help");
+}
 
     public void displayScene() {
         System.out.println("\n=== " + name + " ===");
@@ -123,6 +142,9 @@ public class Scene {
         else if (cmd.startsWith("talk ")) {
             String target = command.substring(5).trim();
             talk(target);
+        }
+        else if (cmd.equals("help")) {
+            help();
         }
         else if (cmd.startsWith("open ")) {
             String target = command.substring(5).trim();

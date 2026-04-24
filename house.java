@@ -64,39 +64,40 @@ public class House extends Scene {
             if (target.equalsIgnoreCase("body")) {
                 System.out.println("The body lies still. Something about it feels wrong.");
                 System.out.println("What else stands out to you about the body? You can inspect specific parts of the body, like the hands, face, nails, or clothing.");
-                inspectedBody = true;
             } 
             else if (target.equalsIgnoreCase("floor")) {
                 System.out.println("There are marks on the floor next to the body.");
                 System.out.println("It looks like someone carved the letters RACHE into the floor. How did they get there?");
                 inspectedFloor = true;
+                resetLeaveWarning();
                 getPlayer().writeNote("The word RACHE was carved into the floor.");
             } 
             else if (target.equalsIgnoreCase("nails")) {
                 System.out.println("You look closely at the victim's nails and notice they are broken.");
                 System.out.println("It appears that carving the letters may have been the last thing she did.");
                 inspectedNails = true;
+                resetLeaveWarning();
                 getPlayer().writeNote("The victim's broken nails suggest she carved RACHE herself.");
-            }
-            else if (target.equalsIgnoreCase("clothing")) {
-                System.out.println("Her clothing is disordered, but not enough to suggest a direct struggle.");
-                inspectedClothing = true;
             }
             else if (target.equalsIgnoreCase("hands")) {
                 System.out.println("The victim's hands look strained, as if she used the last of her strength to leave something behind.");
                 inspectedHands = true;
+                resetLeaveWarning();
             }
             else if (target.equalsIgnoreCase("face")) {
                 System.out.println("Her expression is tense and frightened, frozen in her final moment.");
                 inspectedFace = true;
+                resetLeaveWarning();
             }
             else if (target.equalsIgnoreCase("clothing")) {
                 System.out.println("Her clothing is disordered, but not enough to suggest a direct struggle.");
                 inspectedClothing = true;
+                resetLeaveWarning();
             }
             else if (target.equalsIgnoreCase("bedroom")) {
                 System.out.println("The bedroom looks disturbed, but not randomly.");
                 inspectedBedroom = true;
+                resetLeaveWarning();
             } 
             else {
                 System.out.println("Nothing important there.");
@@ -144,7 +145,9 @@ public class House extends Scene {
             System.out.println("You can only leave from the murder room.");
             return;
         }
-
+        if (!confirmLeaveIfNeeded()) {
+            return;
+        }
         if (!waitingForRunChoice) {
             if (choice.equalsIgnoreCase("run")) {
                 System.out.println("You rush out of the house, your mind racing.");
@@ -258,7 +261,28 @@ public class House extends Scene {
     }
     @Override
     public boolean foundImportantClues() {
-        return inspectedFloor && inspectedNails;
+        int cluesFound = 0;
+
+        if (inspectedFloor) {
+            cluesFound++;
+        }
+        if (inspectedNails) {
+            cluesFound++;
+        }
+        if (inspectedHands) {
+            cluesFound++;
+        }
+        if (inspectedFace) {
+            cluesFound++;
+        }
+        if (inspectedClothing) {
+            cluesFound++;
+        }
+        if (inspectedBedroom) {
+            cluesFound++;
+        }
+
+        return cluesFound >= 3;
     }
 
     @Override

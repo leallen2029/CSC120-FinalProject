@@ -160,6 +160,7 @@ public class BakerSt extends Scene {
             System.out.println("It points you toward the cabbie.");
             System.out.println("This was not random. The suitcase connects directly to the case.");
             phoneOpened = true;
+            getPlayer().setSolvedSuitcase(true);
             watsonArrived = true;
             getPlayer().writeNote("The phone inside the suitcase points to the cabbie.");
             System.out.println("A moment later, Watson comes into the room.");
@@ -186,6 +187,7 @@ public class BakerSt extends Scene {
         System.out.println("He listens carefully, then looks troubled.");
         System.out.println("\"If this is tied to the cabbie,\" he says, \"then we're closer than we thought.\"");
         toldWatson = true;
+        getPlayer().setToldWatson(true);
 
         if (!policeArrived) {
             policeArrived = true;
@@ -200,7 +202,6 @@ public class BakerSt extends Scene {
             System.out.println("There is no reason to hide it yet.");
             return;
         }
-
         if (!getPlayer().hasItem("suitcase")) {
             System.out.println("You do not have the suitcase.");
             return;
@@ -214,6 +215,7 @@ public class BakerSt extends Scene {
         System.out.println("You quickly hide the suitcase before Watson can press you any further.");
         System.out.println("You only tell him part of what you found.");
         hidSuitcase = true;
+        getPlayer().setToldWatson(false);
 
         if (!policeArrived) {
             policeArrived = true;
@@ -232,6 +234,7 @@ public class BakerSt extends Scene {
         System.out.println("With it goes your best chance to solve the crime yourself.");
         getPlayer().dropItem("suitcase");
         lostSuitcaseToPolice = true;
+        getPlayer().setToldPolice(true);
     }
 
  /// helps the player to think through the clues they have uncovered in Baker Street, including the significance of the suitcase and phone, the implications of telling Watson or hiding the suitcase, and how these elements connect to the cabbie and the overall case. The player's deductions will affect how they approach the final confrontation in the next scene.
@@ -261,6 +264,18 @@ public class BakerSt extends Scene {
             return;
         }
 
+        if (phoneOpened && !toldWatson && !hidSuitcase) {
+            System.out.println("Watson is waiting for an answer.");
+            System.out.println("You should either 'tell watson' or 'hide suitcase' before moving on.");
+            return;
+        }
+
+        if (phoneOpened && policeArrived && !noticedPhoneLight) {
+            System.out.println("You feel like something in the room has changed.");
+            System.out.println("Look around before you leave.");
+            return;
+        }
+
         if (phoneOpened && noticedPhoneLight) {
             System.out.println("You realize the cabbie is here.");
             System.out.println("There is no more time to sit and think. You have to move.");
@@ -273,6 +288,12 @@ public class BakerSt extends Scene {
 
     @Override
     public void handleCommand(String command) {
+        String cmd = command.toLowerCase().trim();
+
+        if (cmd.equals("help")) {
+            help();
+            return;
+        }
         if (!arrivalShown) {
             showArrival();
         }

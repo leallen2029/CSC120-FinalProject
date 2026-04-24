@@ -77,6 +77,13 @@ public class Scene {
         String target = command.substring(8);
         inspect(target);
     } 
+    else if (command.equalsIgnoreCase("journal")) {
+    getPlayer().showJournal();
+}
+    else if (command.startsWith("write ")) {
+        String note = command.substring(6);
+        getPlayer().writeNote(note);
+    }
     else if (command.equalsIgnoreCase("go") || command.equalsIgnoreCase("continue")) {
         go();
     } 

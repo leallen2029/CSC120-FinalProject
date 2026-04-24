@@ -8,6 +8,7 @@ public class Intro extends Scene {
     private boolean lockChecked;
     private boolean suitcaseTaken;
     private boolean transportChosen;
+    
 /// sets locaiton and gives player the option to walk or take a cab, with different consequences for each choice. Also introduces the pink suitcase as a potential clue that can be found if the player chooses to walk.
     public Intro(Player player) {
     super("Intro", "You wake up in the dark of your 221B Baker Street flat.", player);

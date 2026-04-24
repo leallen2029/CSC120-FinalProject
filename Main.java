@@ -8,6 +8,8 @@ public class Main {
         Scene currentScene = new Intro(player);
         currentScene.displayScene();
         ((Intro) currentScene).showIntroText();
+        System.out.println("Tip: Type 'write <your note>' to add something to your journal.");
+        System.out.println("Type 'journal' to read your journal.");
 
         while (true) {
             System.out.print("\nWhat do you want to do? ");

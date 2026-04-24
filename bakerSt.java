@@ -11,7 +11,8 @@ public class BakerSt extends Scene {
     private boolean policeArrived;
     private boolean noticedPhoneLight;
     private boolean lostSuitcaseToPolice;
-    private boolean deductionMade;
+    private boolean waitingForCodeAnswer;
+    private boolean codeFiguredOut;
 
 /// initializes the scene and sets the initial state of all events and items
     public BakerSt(Player player) {
@@ -27,8 +28,10 @@ public class BakerSt extends Scene {
         policeArrived = false;
         noticedPhoneLight = false;
         lostSuitcaseToPolice = false;
-        deductionMade = false;
+        waitingForCodeAnswer = false;
+        codeFiguredOut = false;
     }
+
 /// shows the arrival text and sets the stage for the player's investigation in Baker Street, including the importance of the suitcase and the phone, as well as the presence of Watson and the police. The player's interactions with these elements will affect how the scene progresses and what information they uncover.
     public void showArrival() {
         if (arrivalShown) {
@@ -36,7 +39,7 @@ public class BakerSt extends Scene {
         }
 
         System.out.println("You return to Baker Street.");
-        
+
         if (getPlayer().hasItem("suitcase")) {
             System.out.println("The pink suitcase is with you now, sitting in the room like a challenge.");
             System.out.println("You cannot shake the feeling that it matters.");
@@ -50,6 +53,7 @@ public class BakerSt extends Scene {
         System.out.println("You should probably look around and think.");
         arrivalShown = true;
     }
+
 /// handles the player's interactions in Baker Street, including looking around, inspecting specific details, opening the suitcase and phone, talking to Watson, hiding the suitcase from Watson, surrendering the suitcase to the police, thinking through the clues, and moving on to the next scene. The player's choices and interactions will affect how the scene progresses and what information they uncover.
     @Override
     public void lookAround() {
@@ -73,6 +77,7 @@ public class BakerSt extends Scene {
             System.out.println("Watson is here with you, watching your reaction carefully.");
         }
     }
+
 /// ensures the player knows to look around before inspecting and provides different descriptions based on what they choose to inspect, as well as the consequences of inspecting certain items like the suitcase and phone.
     @Override
     public void inspect(String target) {
@@ -84,10 +89,10 @@ public class BakerSt extends Scene {
         if (target.equalsIgnoreCase("suitcase")) {
             if (getPlayer().hasItem("suitcase")) {
                 if (!suitcaseOpened) {
-                    System.out.println("You study the lock again.");
-                    System.out.println("Then it hits you: RACHE.");
-                    System.out.println("The same word from the floor at the crime scene could be the code.");
-                    deductionMade = true;
+                    System.out.println("You study the lock.");
+                    System.out.println("It needs a five-letter code.");
+                    System.out.println("What is the code?");
+                    waitingForCodeAnswer = true;
                 } else {
                     System.out.println("The suitcase lies open. The phone inside is the real prize now.");
                 }
@@ -119,6 +124,7 @@ public class BakerSt extends Scene {
             System.out.println("Nothing important stands out about the " + target + ".");
         }
     }
+
 /// handles the player's attempt to open the suitcase and phone, ensuring they have the necessary items and have made the necessary deductions before allowing them to open these key items. The consequences of opening these items will affect how the scene progresses and what information they uncover.
     public void open(String target) {
         if (target.equalsIgnoreCase("suitcase")) {
@@ -132,9 +138,9 @@ public class BakerSt extends Scene {
                 return;
             }
 
-            if (!deductionMade) {
-                System.out.println("You stare at the lock, but the code does not come to you yet.");
-                System.out.println("Maybe inspect the suitcase more carefully.");
+            if (!codeFiguredOut) {
+                System.out.println("The suitcase is locked.");
+                System.out.println("Inspect the suitcase if you want to try the code.");
                 return;
             }
 
@@ -202,6 +208,7 @@ public class BakerSt extends Scene {
             System.out.println("There is no reason to hide it yet.");
             return;
         }
+
         if (!getPlayer().hasItem("suitcase")) {
             System.out.println("You do not have the suitcase.");
             return;
@@ -214,6 +221,8 @@ public class BakerSt extends Scene {
 
         System.out.println("You quickly hide the suitcase before Watson can press you any further.");
         System.out.println("You only tell him part of what you found.");
+        System.out.println("Watson watches you carefully, but says nothing.");
+        System.out.println("You get the sense this may matter later.");
         hidSuitcase = true;
         getPlayer().setToldWatson(false);
 
@@ -237,13 +246,13 @@ public class BakerSt extends Scene {
         getPlayer().setToldPolice(true);
     }
 
- /// helps the player to think through the clues they have uncovered in Baker Street, including the significance of the suitcase and phone, the implications of telling Watson or hiding the suitcase, and how these elements connect to the cabbie and the overall case. The player's deductions will affect how they approach the final confrontation in the next scene.
+/// helps the player to think through the clues they have uncovered in Baker Street, including the significance of the suitcase and phone, the implications of telling Watson or hiding the suitcase, and how these elements connect to the cabbie and the overall case. The player's deductions will affect how they approach the final confrontation in the next scene.
     public void think() {
         System.out.println("You force yourself to connect the pieces.");
 
         if (getPlayer().hasItem("suitcase") && !suitcaseOpened) {
-            System.out.println("The word RACHE keeps returning to you.");
-            System.out.println("Maybe the lock and the murder scene are connected.");
+            System.out.println("The lock needs a five-letter code.");
+            System.out.println("If you cannot remember it, you may need to return to the crime scene in your notes.");
         }
 
         if (phoneOpened) {
@@ -294,43 +303,58 @@ public class BakerSt extends Scene {
             help();
             return;
         }
+
+        if (waitingForCodeAnswer) {
+            if (cmd.contains("rache")) {
+                System.out.println("Correct. RACHE.");
+                System.out.println("The code falls into place.");
+                codeFiguredOut = true;
+                waitingForCodeAnswer = false;
+            } else {
+                System.out.println("That is not the code.");
+                System.out.println("You may need to return to your crime scene notes.");
+                waitingForCodeAnswer = false;
+            }
+            return;
+        }
+
         if (!arrivalShown) {
             showArrival();
         }
 
-        if (command.equalsIgnoreCase("look") || command.equalsIgnoreCase("look around")) {
+        if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         }
-        else if (command.startsWith("inspect ")) {
-            String target = command.substring(8);
+        else if (cmd.startsWith("inspect ")) {
+            String target = cmd.substring(8).trim();
             inspect(target);
         }
-        else if (command.startsWith("open ")) {
-            String target = command.substring(5);
+        else if (cmd.startsWith("open ")) {
+            String target = cmd.substring(5).trim();
             open(target);
         }
-        else if (command.equalsIgnoreCase("tell watson")) {
+        else if (cmd.equals("tell watson")) {
             tellWatson();
         }
-        else if (command.equalsIgnoreCase("hide suitcase")) {
+        else if (cmd.equals("hide suitcase")) {
             hideSuitcase();
         }
-        else if (command.equalsIgnoreCase("give to police") || command.equalsIgnoreCase("hand over suitcase")) {
+        else if (cmd.equals("give to police") || cmd.equals("hand over suitcase")) {
             surrenderSuitcase();
         }
-        else if (command.equalsIgnoreCase("think")) {
+        else if (cmd.equals("think")) {
             think();
         }
-        else if (command.equalsIgnoreCase("inventory")) {
+        else if (cmd.equals("inventory")) {
             getPlayer().showInventory();
         }
-        else if (command.equalsIgnoreCase("journal")) {
+        else if (cmd.equals("journal")) {
             getPlayer().showJournal();
         }
-        else if (command.startsWith("write ")) {
-            getPlayer().writeNote(command.substring(6));
+        else if (cmd.startsWith("write ")) {
+            getPlayer().writeNote(cmd.substring(6).trim());
         }
-        else if (command.equalsIgnoreCase("go") || command.equalsIgnoreCase("continue") || command.equalsIgnoreCase("escape")) {
+        else if (cmd.equals("go") || cmd.equals("continue") || cmd.equals("escape")) {
             go();
         }
         else {

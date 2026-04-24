@@ -13,9 +13,11 @@ public class Scene {
         this.completed = false;
         this.hasLookedAround = false;
     }
+
     public Player getPlayer() {
         return player;
-}
+    }
+
     public void displayScene() {
         System.out.println("\n=== " + name + " ===");
         System.out.println(description);
@@ -31,6 +33,7 @@ public class Scene {
             System.out.println("You should look around first.");
             return;
         }
+
         System.out.println("There is nothing special about the " + target + ".");
     }
 
@@ -39,6 +42,7 @@ public class Scene {
             System.out.println("You should look around first.");
             return;
         }
+
         System.out.println("You do not notice anything new about the " + target + ".");
     }
 
@@ -50,17 +54,17 @@ public class Scene {
         System.out.println("You cannot open " + target + ".");
     }
 
-    public void take(String target, Player player) {
+    public void take(String target) {
         System.out.println("You cannot take " + target + ".");
     }
 
-    public void drop(String target, Player player) {
+    public void drop(String target) {
         if (player.dropItem(target)) {
             System.out.println("You leave it behind.");
         }
     }
 
-    public void place(String target, Player player) {
+    public void place(String target) {
         if (player.hasItem(target)) {
             System.out.println("You place the " + target + " down.");
             player.dropItem(target);
@@ -69,30 +73,7 @@ public class Scene {
         }
     }
 
-    public void handleCommand(String command) {
-    if (command.equalsIgnoreCase("look") || command.equalsIgnoreCase("look around")) {
-        lookAround();
-    } 
-    else if (command.startsWith("inspect ")) {
-        String target = command.substring(8);
-        inspect(target);
-    } 
-    else if (command.equalsIgnoreCase("journal")) {
-    getPlayer().showJournal();
-}
-    else if (command.startsWith("write ")) {
-        String note = command.substring(6);
-        getPlayer().writeNote(note);
-    }
-    else if (command.equalsIgnoreCase("go") || command.equalsIgnoreCase("continue")) {
-        go();
-    } 
-    else {
-        System.out.println("Unknown command.");
-    }
-}
-
-    public void use(String target, Player player) {
+    public void use(String target) {
         System.out.println("You cannot use " + target + " here.");
     }
 
@@ -107,7 +88,7 @@ public class Scene {
 
     public void move(String direction) {
         System.out.println("You can't go " + direction + " from here.");
-}
+    }
 
     public void setLookedAround(boolean lookedAround) {
         this.hasLookedAround = lookedAround;
@@ -125,68 +106,70 @@ public class Scene {
         return completed;
     }
 
-    public void handleCommand(String command, Player player) {
-        if (command.equalsIgnoreCase("look") || command.equalsIgnoreCase("look around")) {
+    public void handleCommand(String command) {
+        String cmd = command.toLowerCase();
+
+        if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         }
-        else if (command.startsWith("inspect ")) {
+        else if (cmd.startsWith("inspect ")) {
             String target = command.substring(8);
             inspect(target);
         }
-        else if (command.startsWith("notice ")) {
+        else if (cmd.startsWith("notice ")) {
             String target = command.substring(7);
             notice(target);
         }
-        else if (command.startsWith("talk ")) {
+        else if (cmd.startsWith("talk ")) {
             String target = command.substring(5);
             talk(target);
         }
-        else if (command.startsWith("open ")) {
+        else if (cmd.startsWith("open ")) {
             String target = command.substring(5);
             open(target);
         }
-        else if (command.startsWith("take ")) {
+        else if (cmd.startsWith("take ")) {
             String target = command.substring(5);
-            take(target, player);
+            take(target);
         }
-        else if (command.startsWith("drop ")) {
+        else if (cmd.startsWith("drop ")) {
             String target = command.substring(5);
-            drop(target, player);
+            drop(target);
         }
-        else if (command.startsWith("place ")) {
+        else if (cmd.startsWith("place ")) {
             String target = command.substring(6);
-            place(target, player);
+            place(target);
         }
-        else if (command.startsWith("use ")) {
+        else if (cmd.startsWith("use ")) {
             String target = command.substring(4);
-            use(target, player);
+            use(target);
         }
-        else if (command.equalsIgnoreCase("enter")) {
+        else if (cmd.equals("enter")) {
             enter();
         }
-        else if (command.equalsIgnoreCase("go") || command.equalsIgnoreCase("continue")) {
+        else if (cmd.equals("go") || cmd.equals("continue")) {
             go();
         }
-        else if (command.equalsIgnoreCase("inventory")) {
+        else if (cmd.equals("inventory")) {
             player.showInventory();
         }
-        else if (command.equalsIgnoreCase("journal")) {
+        else if (cmd.equals("journal")) {
             player.showJournal();
         }
-        else if (command.startsWith("write ")) {
+        else if (cmd.startsWith("write ")) {
             String note = command.substring(6);
             player.writeNote(note);
-}
-        else if (command.toLowerCase().contains("north")) {
+        }
+        else if (cmd.contains("north")) {
             move("north");
         }
-        else if (command.toLowerCase().contains("south")) {
+        else if (cmd.contains("south")) {
             move("south");
         }
-        else if (command.toLowerCase().contains("east")) {
+        else if (cmd.contains("east")) {
             move("east");
         }
-        else if (command.toLowerCase().contains("west")) {
+        else if (cmd.contains("west")) {
             move("west");
         }
         else {

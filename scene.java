@@ -105,6 +105,10 @@ public class Scene {
         completeScene();
     }
 
+    public void move(String direction) {
+        System.out.println("You can't go " + direction + " from here.");
+}
+
     public void setLookedAround(boolean lookedAround) {
         this.hasLookedAround = lookedAround;
     }
@@ -172,6 +176,18 @@ public class Scene {
         else if (command.startsWith("write ")) {
             String note = command.substring(6);
             player.writeNote(note);
+}
+        else if (command.toLowerCase().contains("north")) {
+            move("north");
+        }
+        else if (command.toLowerCase().contains("south")) {
+            move("south");
+        }
+        else if (command.toLowerCase().contains("east")) {
+            move("east");
+        }
+        else if (command.toLowerCase().contains("west")) {
+            move("west");
         }
         else {
             System.out.println("Unknown command.");

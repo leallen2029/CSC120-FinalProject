@@ -5,13 +5,16 @@ public class Scene {
     private boolean completed;
     private boolean hasLookedAround;
     private Player player;
+    private boolean confirmedLeavingEarly;
 
     public Scene(String name, String description, Player player) {
+        // constructor for Scene class, initializes name, description, player, and sets completed and hasLookedAround to false
         this.name = name;
         this.description = description;
         this.player = player;
         this.completed = false;
         this.hasLookedAround = false;
+        this.confirmedLeavingEarly = false;
     }
 
     public Player getPlayer() {
@@ -101,8 +104,35 @@ public class Scene {
     }
 
     public void go() {
+        if (!confirmLeaveIfNeeded()) {
+            return;
+        }
+
         System.out.println("You continue onward.");
         completeScene();
+    }
+    public boolean foundImportantClues() {
+        return true;
+    }
+
+    public String missingClueWarning() {
+        return "You may have missed something important.";
+    }
+
+    public boolean confirmLeaveIfNeeded() {
+        if (!foundImportantClues() && !confirmedLeavingEarly) {
+            System.out.println(missingClueWarning());
+            System.out.println("Are you sure you want to move on?");
+            System.out.println("Type the same command again to confirm.");
+            confirmedLeavingEarly = true;
+            return false;
+        }
+
+        return true;
+    }
+
+    public void resetLeaveWarning() {
+        confirmedLeavingEarly = false;
     }
 
     public void move(String direction) {

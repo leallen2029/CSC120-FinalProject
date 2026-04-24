@@ -3,12 +3,24 @@ public class House extends Scene {
     private String location;
     private boolean talkedToLestrade;
     private boolean waitingForRunChoice;
+    private boolean inspectedFloor;
+    private boolean inspectedNails;
+    private boolean inspectedHands;
+    private boolean inspectedFace;
+    private boolean inspectedClothing;
+    private boolean inspectedBedroom;
 /// sets location and tracks the player's interactions with Lestrade, as well as their choice to run out of the house and whether they go back for the suitcase or not.
     public House(Player player) {
         super("House", "You arrive outside the house where the death occurred.", player);
         location = "outside";
         talkedToLestrade = false;
         waitingForRunChoice = false;
+        inspectedFloor = false;
+        inspectedNails = false;
+        inspectedHands = false;
+        inspectedFace = false;
+        inspectedClothing = false;
+        inspectedBedroom = false;
 
         System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred.");
     }
@@ -52,26 +64,39 @@ public class House extends Scene {
             if (target.equalsIgnoreCase("body")) {
                 System.out.println("The body lies still. Something about it feels wrong.");
                 System.out.println("What else stands out to you about the body? You can inspect specific parts of the body, like the hands, face, nails, or clothing.");
+                inspectedBody = true;
             } 
             else if (target.equalsIgnoreCase("floor")) {
                 System.out.println("There are marks on the floor next to the body.");
                 System.out.println("It looks like someone carved the letters RACHE into the floor. How did they get there?");
+                inspectedFloor = true;
+                getPlayer().writeNote("The word RACHE was carved into the floor.");
             } 
             else if (target.equalsIgnoreCase("nails")) {
                 System.out.println("You look closely at the victim's nails and notice they are broken.");
                 System.out.println("It appears that carving the letters may have been the last thing she did.");
-            }
-            else if (target.equalsIgnoreCase("hands")) {
-                System.out.println("The victim's hands look strained, as if she used the last of her strength to leave something behind.");
-            }
-            else if (target.equalsIgnoreCase("face")) {
-                System.out.println("Her expression is tense and frightened, frozen in her final moment.");
+                inspectedNails = true;
+                getPlayer().writeNote("The victim's broken nails suggest she carved RACHE herself.");
             }
             else if (target.equalsIgnoreCase("clothing")) {
                 System.out.println("Her clothing is disordered, but not enough to suggest a direct struggle.");
+                inspectedClothing = true;
+            }
+            else if (target.equalsIgnoreCase("hands")) {
+                System.out.println("The victim's hands look strained, as if she used the last of her strength to leave something behind.");
+                inspectedHands = true;
+            }
+            else if (target.equalsIgnoreCase("face")) {
+                System.out.println("Her expression is tense and frightened, frozen in her final moment.");
+                inspectedFace = true;
+            }
+            else if (target.equalsIgnoreCase("clothing")) {
+                System.out.println("Her clothing is disordered, but not enough to suggest a direct struggle.");
+                inspectedClothing = true;
             }
             else if (target.equalsIgnoreCase("bedroom")) {
                 System.out.println("The bedroom looks disturbed, but not randomly.");
+                inspectedBedroom = true;
             } 
             else {
                 System.out.println("Nothing important there.");
@@ -225,9 +250,19 @@ public class House extends Scene {
                 || command.equalsIgnoreCase("continue") 
                 || command.equalsIgnoreCase("go upstairs")) {
             go();
-        } 
+        }
+         
         else {
             System.out.println("Unknown command.");
         }
+    }
+    @Override
+    public boolean foundImportantClues() {
+        return inspectedFloor && inspectedNails;
+    }
+
+    @Override
+    public String missingClueWarning() {
+        return "You feel like you may have missed something important in the murder room.";
     }
 }

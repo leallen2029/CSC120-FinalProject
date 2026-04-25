@@ -2,14 +2,14 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("\n(Type 'help' at any time to see available commands.)");
+        System.out.println("Tip: Type 'write <your note>' to add something to your journal.");
+        System.out.println("Type 'journal' to read your journal.");
         Scanner input = new Scanner(System.in);
         Player player = new Player();
 
         Scene currentScene = new Intro(player);
         currentScene.displayScene();
-        System.out.println("\n(Type 'help' at any time to see available commands.)");
-        System.out.println("Tip: Type 'write <your note>' to add something to your journal.");
-        System.out.println("Type 'journal' to read your journal.");
         ((Intro) currentScene).showIntroText();
 
         while (true) {

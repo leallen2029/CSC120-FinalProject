@@ -35,6 +35,11 @@ public class Intro extends Scene {
         System.out.println(wakingUp);
         System.out.println(transportOption);
     }
+
+    
+    
+    
+
     public void chooseTransport(String transportChoice) {
         if (transportChoice.equalsIgnoreCase("cab")) {
             walkingPath = false;

@@ -11,11 +11,6 @@ public class Intro extends Scene {
     private boolean transportChosen;
     private boolean watsonNoticedSuitcase;
 
-    public void showIntroText() {
-        System.out.println(wakingUp);
-        System.out.println(transportOption);
-    }
-    
     public Intro(Player player) {
         super("Intro", "You wake up in the dark of your 221B Baker Street flat.", player);
 
@@ -35,6 +30,10 @@ public class Intro extends Scene {
         suitcaseTaken = false;
         transportChosen = false;
         watsonNoticedSuitcase = false;
+    }
+    public void showIntroText() {
+        System.out.println(wakingUp);
+        System.out.println(transportOption);
     }
     public void chooseTransport(String transportChoice) {
         if (transportChoice.equalsIgnoreCase("cab")) {

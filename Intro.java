@@ -48,6 +48,7 @@ public class Intro extends Scene {
             System.out.println("You hail a cab and head toward the crime scene.");
             System.out.println("Through the window, you briefly spot a pink suitcase abandoned in an alleyway.");
             System.out.println("Before you can react, the cab turns the corner.");
+            System.out.println("Maybe you want to write this down? Type 'write journal' to add a note.");
             System.out.println("You have arrived at the crime scene.");
             completeScene();
         }
@@ -108,7 +109,7 @@ public class Intro extends Scene {
         else if (target.equalsIgnoreCase("lock")) {
             if (lockFound && !lockChecked) {
                 System.out.println("The lock needs a five-letter code.");
-                System.out.println("You do not know the code yet, but you make a mental note of it.");
+                System.out.println("Maybe you want to write this down? Type 'write journal' to add a note.");
                 getPlayer().writeNote("The pink suitcase has a five-letter lock.");
                 lockChecked = true;
             } else if (lockFound) {

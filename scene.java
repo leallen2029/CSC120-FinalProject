@@ -6,6 +6,7 @@ public class Scene {
     private boolean hasLookedAround;
     private Player player;
     private boolean confirmedLeavingEarly;
+    private boolean waitingForJournalEntry;
 
     public Scene(String name, String description, Player player) {
         // constructor for Scene class, initializes name, description, player, and sets completed and hasLookedAround to false
@@ -15,6 +16,7 @@ public class Scene {
         this.completed = false;
         this.hasLookedAround = false;
         this.confirmedLeavingEarly = false;
+        this.waitingForJournalEntry = false;
     }
 
     public Player getPlayer() {
@@ -140,6 +142,12 @@ public class Scene {
     public boolean handleBasicCommand(String command) {
         String cmd = command.toLowerCase().trim();
 
+        if (waitingForJournalEntry) {
+            player.writeNote(command.trim());
+            waitingForJournalEntry = false;
+            return true;
+        }
+
         if (cmd.equals("help")) {
             help();
             return true;
@@ -149,16 +157,33 @@ public class Scene {
             return true;
         }
         else if (cmd.equals("journal")) {
-            player.showJournal();
-            return true;
+        System.out.println("What do you want to do?");
+        System.out.println("- type 'read journal' to read your notes");
+        System.out.println("- type 'write journal' to add a note");
+        return true;
         }
-        else if (cmd.startsWith("write ")) {
-            player.writeNote(command.substring(6).trim());
+        else if (cmd.equals("read journal")) {
+        player.showJournal();
+        return true;
+        }
+
+        else if (cmd.equals("write journal")) {
+            System.out.println("What do you want to write?");
+            waitingForJournalEntry = true;
             return true;
         }
 
-        return false;
-    }
+            else if (cmd.startsWith("drop ")) {
+                drop(command.substring(5).trim());
+                return true;
+            }
+            
+            else if (cmd.startsWith("place ")) {
+                place(command.substring(6).trim());
+                return true;
+            }
+            return false;
+        }
 
     public void handleCommand(String command) {
         if (handleBasicCommand(command)) {

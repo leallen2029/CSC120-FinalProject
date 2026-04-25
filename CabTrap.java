@@ -156,12 +156,11 @@ public class CabTrap extends Scene {
 /// handles the player's commands in this final scene, allowing them to look around, inspect the cabbie and the room, confront the cabbie, or try to move on. The player's options and the consequences of their actions will depend on how they have navigated the case up to this point, and their choices in this scene will determine how the confrontation unfolds and what information they uncover about the cabbie and his role in the case.
     @Override
     public void handleCommand(String command) {
-        String cmd = command.toLowerCase().trim();
-
-        if (cmd.equals("help")) {
-            help();
+        if (handleBasicCommand(command)) {
             return;
         }
+
+        String cmd = command.toLowerCase().trim();
 
         if (!arrivalShown) {
             showArrival();

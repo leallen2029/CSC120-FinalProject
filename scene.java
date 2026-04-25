@@ -154,15 +154,35 @@ public class Scene {
     public boolean isCompleted() {
         return completed;
     }
-
-    public void handleCommand(String command) {
+    public boolean handleBasicCommand(String command) {
         String cmd = command.toLowerCase().trim();
 
-        // help 
         if (cmd.equals("help")) {
             help();
+            return true;
+        }
+        else if (cmd.equals("inventory")) {
+            player.showInventory();
+            return true;
+        }
+        else if (cmd.equals("journal")) {
+            player.showJournal();
+            return true;
+        }
+        else if (cmd.startsWith("write ")) {
+            player.writeNote(command.substring(6).trim());
+            return true;
+        }
+
+        return false;
+    }
+
+    public void handleCommand(String command) {
+        if (handleBasicCommand(command)) {
             return;
         }
+        String cmd = command.toLowerCase().trim();
+
         if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         }
@@ -215,16 +235,6 @@ public class Scene {
         }
         else if (cmd.equals("go") || cmd.equals("continue")) {
             go();
-        }
-        else if (cmd.equals("inventory")) {
-            player.showInventory();
-        }
-        else if (cmd.equals("journal")) {
-            player.showJournal();
-        }
-        else if (cmd.startsWith("write ")) {
-            String note = command.substring(6).trim();
-            player.writeNote(note);
         }
         else {
             System.out.println("Unknown command.");

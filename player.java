@@ -121,4 +121,11 @@ public class Player {
     public boolean hasSolvedSuitcase() {
         return solvedSuitcase;
     }
+    public void addItem(String item) {
+        item = item.toLowerCase();
+
+        if (!inventory.contains(item)) {
+            inventory.add(item);
+        }
+    }
 }

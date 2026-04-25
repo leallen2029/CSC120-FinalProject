@@ -170,12 +170,11 @@ public class Intro extends Scene {
 
     @Override
     public void handleCommand(String command) {
-        String cmd = command.toLowerCase().trim();
-
-        if (cmd.equals("help")) {
-            help();
+        if (handleBasicCommand(command)) {
             return;
         }
+
+        String cmd = command.toLowerCase().trim();
 
         if (!transportChosen) {
             if (cmd.equals("cab") || cmd.equals("walk")) {
@@ -199,16 +198,6 @@ public class Intro extends Scene {
         }
         else if (cmd.equals("leave suitcase")) {
             leaveSuitcase();
-        }
-        else if (cmd.equals("journal")) {
-            getPlayer().showJournal();
-        }
-        else if (cmd.startsWith("write ")) {
-            String note = command.substring(6).trim();
-            getPlayer().writeNote(note);
-        }
-        else if (cmd.equals("inventory")) {
-            getPlayer().showInventory();
         }
         else if (cmd.equals("go") || cmd.equals("continue")) {
             go();

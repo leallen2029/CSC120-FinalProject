@@ -176,9 +176,10 @@ public class House extends Scene {
             if (choice.equalsIgnoreCase("return suitcase")) {
                 System.out.println("You decide to go back for the suitcase lead.");
                 getPlayer().setReturnedToSuitcase(true);
+                getPlayer().addItem("suitcase");
                 waitingForRunChoice = false;
                 completeScene();
-            } 
+            }
             else if (choice.equalsIgnoreCase("leave watson")) {
                 System.out.println("You decide not to go back for the suitcase and leave with Watson instead.");
                 getPlayer().setReturnedToSuitcase(false);
@@ -226,39 +227,43 @@ public class House extends Scene {
 
     @Override
     public void handleCommand(String command) {
-        if (command.equalsIgnoreCase("look") || command.equalsIgnoreCase("look around")) {
+        if (handleBasicCommand(command)) {
+            return;
+        }
+
+        String cmd = command.toLowerCase().trim();
+
+        if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         } 
-        else if (command.startsWith("inspect ")) {
-            String target = command.substring(8);
+        else if (cmd.startsWith("inspect ")) {
+            String target = command.substring(8).trim();
             inspect(target);
         } 
-        else if (command.equalsIgnoreCase("talk lestrade")) {
+        else if (cmd.equals("talk lestrade")) {
             talkToLestrade();
         } 
-        else if (command.equalsIgnoreCase("explore")) {
+        else if (cmd.equals("explore")) {
             explore();
         } 
-        else if (command.startsWith("leave ")) {
-            String choice = command.substring(6);
+        else if (cmd.startsWith("leave ")) {
+            String choice = command.substring(6).trim();
             leave(choice);
         }
-        else if (command.equalsIgnoreCase("return suitcase")) {
+        else if (cmd.equals("return suitcase")) {
             leave("return suitcase");
         }
-        else if (command.equalsIgnoreCase("leave watson")) {
+        else if (cmd.equals("leave watson")) {
             leave("leave watson");
         }
-        else if (command.equalsIgnoreCase("go") 
-                || command.equalsIgnoreCase("continue") 
-                || command.equalsIgnoreCase("go upstairs")) {
+        else if (cmd.equals("go") || cmd.equals("continue") || cmd.equals("go upstairs")) {
             go();
         }
-         
         else {
             System.out.println("Unknown command.");
         }
     }
+    
     @Override
     public boolean foundImportantClues() {
         int cluesFound = 0;

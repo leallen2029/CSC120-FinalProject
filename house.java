@@ -227,17 +227,13 @@ public class House extends Scene {
 
     @Override
     public void handleCommand(String command) {
-        if (handleBasicCommand(command)) {
-            return;
-        }
-
         String cmd = command.toLowerCase().trim();
 
         if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         } 
         else if (cmd.startsWith("inspect ")) {
-            String target = command.substring(8).trim();
+            String target = cmd.substring(8).trim();
             inspect(target);
         } 
         else if (cmd.equals("talk lestrade")) {
@@ -247,7 +243,7 @@ public class House extends Scene {
             explore();
         } 
         else if (cmd.startsWith("leave ")) {
-            String choice = command.substring(6).trim();
+            String choice = cmd.substring(6).trim();
             leave(choice);
         }
         else if (cmd.equals("return suitcase")) {
@@ -256,14 +252,16 @@ public class House extends Scene {
         else if (cmd.equals("leave watson")) {
             leave("leave watson");
         }
-        else if (cmd.equals("go") || cmd.equals("continue") || cmd.equals("go upstairs")) {
+        else if (cmd.equals("go") 
+                || cmd.equals("continue") 
+                || cmd.equals("go upstairs")) {
             go();
-        }
+        } 
         else {
             System.out.println("Unknown command.");
         }
     }
-    
+
     @Override
     public boolean foundImportantClues() {
         int cluesFound = 0;

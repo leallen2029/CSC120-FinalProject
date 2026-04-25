@@ -21,23 +21,6 @@ public class Scene {
         return player;
     }
     public void help() {
-        System.out.println("\nCommands you can use:");
-        System.out.println("- look OR look around");
-        System.out.println("- inspect <thing>");
-        System.out.println("- notice <thing>");
-        System.out.println("- talk <person>");
-        System.out.println("- open <thing>");
-        System.out.println("- take <thing>");
-        System.out.println("- drop <thing>");
-        System.out.println("- place <thing>");
-        System.out.println("- use <thing>");
-        System.out.println("- enter");
-        System.out.println("- go");
-        System.out.println("- go north / go south / go east / go west");
-        System.out.println("- inventory");
-        System.out.println("- journal");
-        System.out.println("- write <note>");
-        System.out.println("- help");
 }
 
     public void displayScene() {

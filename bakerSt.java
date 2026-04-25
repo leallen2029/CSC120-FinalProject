@@ -352,4 +352,17 @@ public class BakerSt extends Scene {
             System.out.println("Unknown command.");
         }
     }
+    @Override
+    public void help() {
+        super.help();
+        System.out.println("\nBaker Street commands:");
+        System.out.println("- inspect suitcase");
+        System.out.println("- open suitcase");
+        System.out.println("- open phone");
+        System.out.println("- tell watson");
+        System.out.println("- hide suitcase");
+        System.out.println("- hand over suitcase");
+        System.out.println("- think");
+        System.out.println("- escape");
+    }
 }

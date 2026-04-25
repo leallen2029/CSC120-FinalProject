@@ -287,9 +287,19 @@ public class House extends Scene {
 
         return cluesFound >= 3;
     }
-
     @Override
     public String missingClueWarning() {
         return "You feel like you may have missed something important in the murder room.";
+    }
+    @Override
+    public void help() {
+        super.help();
+        System.out.println("\nHouse commands:");
+        System.out.println("- talk lestrade");
+        System.out.println("- explore");
+        System.out.println("- leave run");
+        System.out.println("- leave walk");
+        System.out.println("- return suitcase");
+        System.out.println("- leave watson");
     }
 }

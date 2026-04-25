@@ -184,5 +184,16 @@ public class CabTrap extends Scene {
         else {
             System.out.println("Unknown command.");
         }
+        
+    }
+    @Override
+    public void help() {
+        super.help();
+        System.out.println("\nFinal scene commands:");
+        System.out.println("- inspect cabbie");
+        System.out.println("- inspect room");
+        System.out.println("- inspect pills");
+        System.out.println("- confront");
+        System.out.println("- face cabbie");
     }
 }

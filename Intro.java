@@ -206,4 +206,13 @@ public class Intro extends Scene {
             System.out.println("Unknown command.");
         }
     }
+    @Override
+    public void help() {
+        super.help();
+        System.out.println("\nIntro commands:");
+        System.out.println("- cab");
+        System.out.println("- walk");
+        System.out.println("- take suitcase");
+        System.out.println("- leave suitcase");
+    }
 }

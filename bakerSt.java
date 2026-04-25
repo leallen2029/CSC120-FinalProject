@@ -126,6 +126,7 @@ public class BakerSt extends Scene {
     }
 
 /// handles the player's attempt to open the suitcase and phone, ensuring they have the necessary items and have made the necessary deductions before allowing them to open these key items. The consequences of opening these items will affect how the scene progresses and what information they uncover.
+    @Override
     public void open(String target) {
         if (target.equalsIgnoreCase("suitcase")) {
             if (!getPlayer().hasItem("suitcase")) {

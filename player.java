@@ -21,7 +21,7 @@ public class Player {
 
     public void setTookCab(boolean tookCab) {
         this.tookCab = tookCab;
-}
+    }
 
     public boolean hasTookCab() {
         return tookCab;
@@ -85,7 +85,7 @@ public class Player {
     }
     public void setRanOut(boolean ranOut) {
     this.ranOut = ranOut;
-}
+    }
 
     public boolean hasRanOut() {
         return ranOut;
@@ -100,7 +100,7 @@ public class Player {
     }
     public void setToldWatson(boolean toldWatson) {
     this.toldWatson = toldWatson;
-}
+    }
 
     public boolean hasToldWatson() {
         return toldWatson;

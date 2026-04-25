@@ -35,7 +35,6 @@ public class Intro extends Scene {
     public void showIntroText() {
         System.out.println(wakingUp);
         System.out.println(transportOption);
-        System.out.println("(Type 'help' at any time to see available commands.)");
     }
 
     public void chooseTransport(String transportChoice) {

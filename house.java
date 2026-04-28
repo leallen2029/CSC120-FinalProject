@@ -176,7 +176,7 @@ public class House extends Scene {
             if (choice.equalsIgnoreCase("return suitcase")) {
                 System.out.println("You decide to go back for the suitcase lead.");
                 getPlayer().setReturnedToSuitcase(true);
-                getPlayer().addItem("suitcase");
+                getPlayer().takeItem("suitcase");
                 waitingForRunChoice = false;
                 completeScene();
             }
@@ -227,6 +227,10 @@ public class House extends Scene {
 
     @Override
     public void handleCommand(String command) {
+        if (handleBasicCommand(command)) {
+            return;
+        }
+
         String cmd = command.toLowerCase().trim();
 
         if (cmd.equals("look") || cmd.equals("look around")) {
@@ -254,11 +258,18 @@ public class House extends Scene {
         }
         else if (cmd.equals("go") 
                 || cmd.equals("continue") 
-                || cmd.equals("go upstairs")) {
+                || cmd.equals("go upstairs")
+                || cmd.equals("go inside")
+                || cmd.equals("go through door")
+                || cmd.equals("enter")
+                || cmd.equals("enter house")) {
             go();
-        } 
+        }
+        else if (cmd.startsWith("go ")) {
+            go();
+        }
         else {
-            System.out.println("Unknown command.");
+            super.handleCommand(command);
         }
     }
 
@@ -301,5 +312,8 @@ public class House extends Scene {
         System.out.println("- leave walk");
         System.out.println("- return suitcase");
         System.out.println("- leave watson");
+        System.out.println("- go inside");
+        System.out.println("- go through door");
+        System.out.println("- enter house");
     }
 }

@@ -305,7 +305,7 @@ public class BakerSt extends Scene {
         String cmd = command.toLowerCase().trim();
 
         if (waitingForCodeAnswer) {
-            if (cmd.contains("rache")) {
+            if (cmd.equals("rache")) {
                 System.out.println("Correct. RACHE.");
                 System.out.println("The code falls into place.");
                 codeFiguredOut = true;

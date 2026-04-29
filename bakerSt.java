@@ -13,6 +13,7 @@ public class BakerSt extends Scene {
     private boolean lostSuitcaseToPolice;
     private boolean waitingForCodeAnswer;
     private boolean codeFiguredOut;
+    private boolean phoneTaken;
 
 /// initializes the scene and sets the initial state of all events and items
     public BakerSt(Player player) {
@@ -30,6 +31,7 @@ public class BakerSt extends Scene {
         lostSuitcaseToPolice = false;
         waitingForCodeAnswer = false;
         codeFiguredOut = false;
+        phoneTaken = false;
     }
 
 /// shows the arrival text and sets the stage for the player's investigation in Baker Street, including the importance of the suitcase and the phone, as well as the presence of Watson and the police. The player's interactions with these elements will affect how the scene progresses and what information they uncover.
@@ -148,6 +150,7 @@ public class BakerSt extends Scene {
             System.out.println("You enter RACHE into the lock.");
             System.out.println("The suitcase clicks open.");
             System.out.println("Inside is a phone.");
+            System.out.println("You should take the phone before you can use it.");
             suitcaseOpened = true;
             phoneFound = true;
             getPlayer().writeNote("The suitcase code was RACHE.");
@@ -177,7 +180,21 @@ public class BakerSt extends Scene {
             System.out.println("You cannot open " + target + ".");
         }
     }
-
+   @Override
+    public void take(String target) {
+        if (target.equalsIgnoreCase("phone")) {
+            if (!phoneFound) {
+                System.out.println("There is no phone to take.");
+            } else if (phoneTaken) {
+                System.out.println("You already took the phone.");
+            } else {
+                System.out.println("You pick up the phone.");
+                phoneTaken = true;
+            }
+        } else {
+            super.take(target);
+        }
+    }
 /// allows the player to tell Watson about the suitcase and its contents, which will affect how Watson interacts with the player and how the police become involved in the case. The player can also choose to hide the suitcase from Watson, which will affect their relationship with him and how the investigation proceeds.
     public void tellWatson() {
         if (!watsonArrived) {

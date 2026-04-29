@@ -2,25 +2,25 @@ public class House extends Scene {
 
     private String location;
     private boolean talkedToLestrade;
-    private boolean waitingForRunChoice;
     private boolean inspectedFloor;
     private boolean inspectedNails;
     private boolean inspectedHands;
     private boolean inspectedFace;
     private boolean inspectedClothing;
     private boolean inspectedBedroom;
+    private boolean waitingForLeaveChoice;
 /// sets location and tracks the player's interactions with Lestrade, as well as their choice to run out of the house and whether they go back for the suitcase or not.
     public House(Player player) {
         super("House", "You arrive outside the house where the death occurred.", player);
         location = "outside";
         talkedToLestrade = false;
-        waitingForRunChoice = false;
         inspectedFloor = false;
         inspectedNails = false;
         inspectedHands = false;
         inspectedFace = false;
         inspectedClothing = false;
         inspectedBedroom = false;
+        waitingForLeaveChoice = false;
 
         System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred.");
     }
@@ -125,70 +125,64 @@ public class House extends Scene {
             System.out.println("Lestrade has nothing new to add right now.");
         }
     }
-/// allows the player to explore the downstairs area and discover more information about the case, but only after talking to Lestrade for the first time. After that, they can explore again but won't find anything new.
-    public void explore() {
-        if (location.equals("downstairs") && !talkedToLestrade) {
-            System.out.println("As you try to move further in, Lestrade steps into your path.");
-            System.out.println("\"Before you go wandering off,\" he says, \"you should hear what we know so far.\"");
-            talkToLestrade();
-        } 
-        else if (location.equals("downstairs")) {
-            System.out.println("You glance around the downstairs area, but the important evidence seems to be upstairs.");
-        } 
-        else {
-            System.out.println("There is nowhere else to explore right now.");
-        }
-    }
 /// deals with the player leaving the house, ensuring they uncover at least some things    
     public void leave(String choice) {
         if (!location.equals("murderroom")) {
             System.out.println("You can only leave from the murder room.");
             return;
         }
+
         if (!confirmLeaveIfNeeded()) {
             return;
         }
-        if (!waitingForRunChoice) {
-            if (choice.equalsIgnoreCase("run")) {
-                System.out.println("You rush out of the house, your mind racing.");
 
-                getPlayer().setRanOut(true);
+        if (choice.equals("ask")) {
+            waitingForLeaveChoice = true;
+            System.out.println("Where do you want to go?");
 
-                if (getPlayer().hasTookCab()) {
-                    waitingForRunChoice = true;
-                    System.out.println("As you reach the street, you remember the pink suitcase you saw from the cab.");
-                    System.out.println("Type 'return suitcase' or 'leave watson'.");
-                } else {
-                    completeScene();
-                }
-            } 
-            else if (choice.equalsIgnoreCase("walk")) {
-                System.out.println("You leave calmly with Watson, discussing the case as you go.");
-                getPlayer().setRanOut(false);
-                getPlayer().setReturnedToSuitcase(false);
-                completeScene();
-            } 
-            else {
-                System.out.println("You can only leave from the murder room.");
+            if (getPlayer().hasItem("suitcase") || getPlayer().hasReturnedToSuitcase()) {
+                System.out.println("- leave with watson");
+                System.out.println("- leave without watson");
+            } else {
+                System.out.println("- leave with watson");
+                System.out.println("- leave without watson");
+                System.out.println("- return suitcase with watson");
+                System.out.println("- return suitcase without watson");
             }
-        } 
+
+            return;
+        }
+
+        if (choice.equals("leave with watson")) {
+            waitingForLeaveChoice = false;
+            System.out.println("You leave calmly with Watson and return to Baker Street.");
+            getPlayer().setRanOut(false);
+            completeScene();
+        }
+        else if (choice.equals("leave without watson")) {
+            waitingForLeaveChoice = false;
+            System.out.println("You rush out without Watson, your mind racing.");
+            getPlayer().setRanOut(true);
+            completeScene();
+        }
+        else if (choice.equals("return suitcase with watson")) {
+            waitingForLeaveChoice = false;
+            System.out.println("You and Watson return to the alley and recover the suitcase.");
+            getPlayer().setRanOut(false);
+            getPlayer().setReturnedToSuitcase(true);
+            getPlayer().takeItem("suitcase");
+            completeScene();
+        }
+        else if (choice.equals("return suitcase without watson")) {
+            waitingForLeaveChoice = false;
+            System.out.println("You run back alone and recover the suitcase.");
+            getPlayer().setRanOut(true);
+            getPlayer().setReturnedToSuitcase(true);
+            getPlayer().takeItem("suitcase");
+            completeScene();
+        }
         else {
-            if (choice.equalsIgnoreCase("return suitcase")) {
-                System.out.println("You decide to go back for the suitcase lead.");
-                getPlayer().setReturnedToSuitcase(true);
-                getPlayer().takeItem("suitcase");
-                waitingForRunChoice = false;
-                completeScene();
-            }
-            else if (choice.equalsIgnoreCase("leave watson")) {
-                System.out.println("You decide not to go back for the suitcase and leave with Watson instead.");
-                getPlayer().setReturnedToSuitcase(false);
-                waitingForRunChoice = false;
-                completeScene();
-            } 
-            else {
-                System.out.println("Type 'return suitcase' or 'leave watson'.");
-            }
+            System.out.println("Choose one of the listed options.");
         }
     }
 /// changes go() to fit the house situation
@@ -243,18 +237,11 @@ public class House extends Scene {
         else if (cmd.equals("talk lestrade")) {
             talkToLestrade();
         } 
-        else if (cmd.equals("explore")) {
-            explore();
-        } 
-        else if (cmd.startsWith("leave ")) {
-            String choice = cmd.substring(6).trim();
-            leave(choice);
+       else if (cmd.equals("leave")) {
+            leave("ask");
         }
-        else if (cmd.equals("return suitcase")) {
-            leave("return suitcase");
-        }
-        else if (cmd.equals("leave watson")) {
-            leave("leave watson");
+        else if (waitingForLeaveChoice) {
+            leave(cmd);
         }
         else if (cmd.equals("go") 
                 || cmd.equals("continue") 
@@ -307,11 +294,11 @@ public class House extends Scene {
         super.help();
         System.out.println("\nHouse commands:");
         System.out.println("- talk lestrade");
-        System.out.println("- explore");
-        System.out.println("- leave run");
-        System.out.println("- leave walk");
-        System.out.println("- return suitcase");
-        System.out.println("- leave watson");
+        System.out.println("- leave");
+        System.out.println("- leave with watson");
+        System.out.println("- leave without watson");
+        System.out.println("- return suitcase with watson");
+        System.out.println("- return suitcase without watson");
         System.out.println("- go inside");
         System.out.println("- go through door");
         System.out.println("- enter house");

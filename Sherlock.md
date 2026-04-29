@@ -43,3 +43,5 @@ Enter?
 
 
 ?narratives()
+
+only include public

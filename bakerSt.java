@@ -161,6 +161,11 @@ public class BakerSt extends Scene {
                 return;
             }
 
+            if (!phoneTaken) {
+                System.out.println("You need to take the phone first.");
+                return;
+            }
+
             if (phoneOpened) {
                 System.out.println("The phone is already open.");
                 return;
@@ -270,7 +275,7 @@ public class BakerSt extends Scene {
 
         if (getPlayer().hasItem("suitcase") && !suitcaseOpened) {
             System.out.println("The lock needs a five-letter code.");
-            System.out.println("If you cannot remember it, you may need to return to the crime scene in your notes.");
+            System.out.println("If you cannot remember it, type 'read journal' to look at your notes.");
         }
 
         if (phoneOpened) {
@@ -279,6 +284,7 @@ public class BakerSt extends Scene {
 
         if (lostSuitcaseToPolice) {
             System.out.println("Without the suitcase, the investigation feels like it is slipping away from you.");
+  
         }
     }
 
@@ -376,6 +382,7 @@ public class BakerSt extends Scene {
         System.out.println("- inspect suitcase");
         System.out.println("- open suitcase");
         System.out.println("- open phone");
+        System.out.println("- take phone");
         System.out.println("- tell watson");
         System.out.println("- hide suitcase");
         System.out.println("- hand over suitcase");

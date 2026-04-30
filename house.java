@@ -62,7 +62,7 @@ public class House extends Scene {
 
         if (location.equals("murderroom")) {
             if (target.equalsIgnoreCase("body")) {
-                System.out.println("The body lies still. Something about it feels wrong.");
+                System.out.println("The body lies faced down. The victim is dressed in a pink trench coat.");
                 System.out.println("What else stands out to you about the body? You can inspect specific parts of the body, like the hands, face, nails, or clothing.");
             } 
             else if (target.equalsIgnoreCase("floor")) {
@@ -70,14 +70,12 @@ public class House extends Scene {
                 System.out.println("It looks like someone carved the letters RACHE into the floor. How did they get there?");
                 inspectedFloor = true;
                 resetLeaveWarning();
-                getPlayer().writeNote("The word RACHE was carved into the floor.");
             } 
             else if (target.equalsIgnoreCase("nails")) {
                 System.out.println("You look closely at the victim's nails and notice they are broken.");
                 System.out.println("It appears that carving the letters may have been the last thing she did.");
                 inspectedNails = true;
                 resetLeaveWarning();
-                getPlayer().writeNote("The victim's broken nails suggest she carved RACHE herself.");
             }
             else if (target.equalsIgnoreCase("hands")) {
                 System.out.println("The victim's hands look strained, as if she used the last of her strength to leave something behind.");

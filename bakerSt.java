@@ -368,7 +368,7 @@ public class BakerSt extends Scene {
         else if (cmd.equals("think")) {
             think();
         }
-        else if (cmd.equals("go") || cmd.equals("continue") || cmd.equals("escape")) {
+        else if (cmd.equals("go") || cmd.equals("escape")) {
             go();
         }
         else {

@@ -147,7 +147,7 @@ public class Intro extends Scene {
     public void leaveSuitcase() {
         if (suitcaseFound && !suitcaseTaken) {
             System.out.println("You decide to leave the suitcase where it is.");
-            System.out.println("Watson glances back once as you continue toward the crime scene.");
+            System.out.println("Watson glances back once as you go toward the crime scene.");
             getPlayer().writeNote("I saw a pink suitcase in the alley but left it behind.");
             completeScene();
         } else if (suitcaseTaken) {
@@ -165,7 +165,7 @@ public class Intro extends Scene {
             return;
         }
 
-        System.out.println("You continue toward the crime scene.");
+        System.out.println("You go toward the crime scene.");
         System.out.println("You have arrived at the house.");
         completeScene();
     }
@@ -201,7 +201,7 @@ public class Intro extends Scene {
         else if (cmd.equals("leave suitcase")) {
             leaveSuitcase();
         }
-        else if (cmd.equals("go") || cmd.equals("continue")) {
+        else if (cmd.equals("go") ) {
             go();
         }
         else {
@@ -216,7 +216,7 @@ public class Intro extends Scene {
         System.out.println("- walk");
         System.out.println("- take suitcase");
         System.out.println("- leave suitcase");
-        System.out.println("- continue");
+        System.out.println("- go");
     }
 }
 

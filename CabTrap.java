@@ -178,7 +178,7 @@ public class CabTrap extends Scene {
         else if (cmd.equals("confront") || cmd.equals("face cabbie")) {
             confront();
         }
-        else if (cmd.equals("go") || cmd.equals("continue")) {
+        else if (cmd.equals("go")) {
             go();
         }
         else {

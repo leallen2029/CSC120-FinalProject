@@ -241,7 +241,7 @@ public class Scene {
                 System.out.println("Go where? Try north, south, east, or west.");
             }
         }
-        else if (cmd.equals("go") || cmd.equals("continue")) {
+        else if (cmd.equals("go") ) {
             go();
         }
         else {

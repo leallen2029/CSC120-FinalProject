@@ -242,7 +242,6 @@ public class House extends Scene {
             leave(cmd);
         }
         else if (cmd.equals("go") 
-                || cmd.equals("continue") 
                 || cmd.equals("go upstairs")
                 || cmd.equals("go inside")
                 || cmd.equals("go through door")

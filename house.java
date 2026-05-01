@@ -9,6 +9,12 @@ public class House extends Scene {
     private boolean inspectedClothing;
     private boolean inspectedBedroom;
     private boolean waitingForLeaveChoice;
+
+    private boolean noticedDonovan;
+    private boolean noticedMud;
+    private boolean noticedCigarette;
+    private boolean pickpocketedDonovan;
+
 /// sets location and tracks the player's interactions with Lestrade, as well as their choice to run out of the house and whether they go back for the suitcase or not.
     public House(Player player) {
         super("House", "You arrive outside the house where the death occurred.", player);
@@ -21,10 +27,15 @@ public class House extends Scene {
         inspectedClothing = false;
         inspectedBedroom = false;
         waitingForLeaveChoice = false;
+        noticedDonovan = false;
+        noticedMud = false;
+        noticedCigarette = false;
+        pickpocketedDonovan = false;
 
         System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred.");
     }
-/// handles the player's interactions with the house, including looking around, inspecting specific details, talking to Lestrade, exploring the downstairs area, leaving the house, and moving through the different areas of the house. The player's choices and interactions will affect how the scene progresses and what information they uncover.
+
+/// handles the player's interactions with the house, including looking around, inspecting specific details, talking to Lestrade, exploring the outside area, leaving the house, and moving through the different areas of the house. The player's choices and interactions will affect how the scene progresses and what information they uncover.
     @Override
     public void lookAround() {
         setLookedAround(true);
@@ -32,8 +43,9 @@ public class House extends Scene {
         if (location.equals("outside")) {
             System.out.println("John Watson looks around and says, \"This place gives me the creeps.\"");
             System.out.println("Sergeant Donovan is walking around the yard, looking for clues.");
-            System.out.println("You notice the front door. It's slightly open.");
-            System.out.println("You can go inside when you're ready.");
+            System.out.println("The front door is slightly open.");
+            System.out.println("You can go inside whenever you're ready, or you can investigate outside first.");
+            System.out.println("You may notice Donovan, the mud, or the cigarette.");
         } 
         else if (location.equals("downstairs")) {
             System.out.println("You step just inside the doorway and pause.");
@@ -52,18 +64,92 @@ public class House extends Scene {
             System.out.println("You notice the body, the floor, and the bedroom space around you.");
         }
     }
+
+/// lets the player notice details outside the house without forcing them to follow one exact path.
+    @Override
+    public void notice(String target) {
+        if (!location.equals("outside")) {
+            System.out.println("Nothing new stands out right now.");
+            return;
+        }
+
+        if (target.equalsIgnoreCase("donovan")) {
+            System.out.println("Donovan keeps checking her coat pocket while pretending not to watch you.");
+            System.out.println("Whatever is in there, she does not want attention drawn to it.");
+            noticedDonovan = true;
+        }
+        else if (target.equalsIgnoreCase("mud")) {
+            System.out.println("The mud near the path is disturbed.");
+            System.out.println("Some prints are narrow, lighter than the policemen's boots.");
+            noticedMud = true;
+        }
+        else if (target.equalsIgnoreCase("cigarette")) {
+            System.out.println("A half-smoked cigarette lies near the path.");
+            System.out.println("It looks recently dropped.");
+            noticedCigarette = true;
+        }
+        else {
+            System.out.println("You do not notice anything useful about the " + target + ".");
+        }
+    }
+
+/// allows the player to take a risky action outside if they noticed the right detail first.
+    public void pickpocket(String target) {
+        if (!location.equals("outside")) {
+            System.out.println("There is no one here to pickpocket.");
+            return;
+        }
+
+        if (target.equalsIgnoreCase("donovan")) {
+            if (!noticedDonovan) {
+                System.out.println("You need to pay closer attention to Donovan first.");
+                return;
+            }
+
+            if (pickpocketedDonovan) {
+                System.out.println("You already took what you could from Donovan.");
+                return;
+            }
+
+            System.out.println("While Donovan is distracted, you slip a folded police note from her coat pocket.");
+            getPlayer().takeItem("police note");
+            getPlayer().writeNote("Donovan had a police note about the victim.");
+            pickpocketedDonovan = true;
+        }
+        else {
+            System.out.println("You cannot pickpocket " + target + ".");
+        }
+    }
+
 /// ensures the player knows to look around before inspecting and provides different descriptions based on the player's location in the house and what they choose to inspect.
     @Override
     public void inspect(String target) {
-        if (!hasLookedAround()) {
+        if (!hasLookedAround() && !location.equals("outside")) {
             System.out.println("Look around first.");
             return;
         }
 
-        if (location.equals("murderroom")) {
+        if (location.equals("outside")) {
+            if (target.equalsIgnoreCase("door")) {
+                System.out.println("The front door is slightly open. You can go inside whenever you are ready.");
+            }
+            else if (target.equalsIgnoreCase("donovan")) {
+                notice("donovan");
+            }
+            else if (target.equalsIgnoreCase("mud")) {
+                notice("mud");
+            }
+            else if (target.equalsIgnoreCase("cigarette")) {
+                notice("cigarette");
+            }
+            else {
+                System.out.println("Nothing useful stands out about the " + target + ".");
+            }
+        }
+        else if (location.equals("murderroom")) {
             if (target.equalsIgnoreCase("body")) {
                 System.out.println("The body lies faced down. The victim is dressed in a pink trench coat.");
-                System.out.println("What else stands out to you about the body? You can inspect specific parts of the body, like the hands, face, nails, or clothing.");
+                System.out.println("What else stands out to you about the body? You can inspect the hands, face, nails, or clothing.");
             } 
             else if (target.equalsIgnoreCase("floor")) {
                 System.out.println("There are marks on the floor next to the body.");
@@ -123,6 +209,7 @@ public class House extends Scene {
             System.out.println("Lestrade has nothing new to add right now.");
         }
     }
+
 /// deals with the player leaving the house, ensuring they uncover at least some things    
     public void leave(String choice) {
         if (!location.equals("murderroom")) {
@@ -183,15 +270,11 @@ public class House extends Scene {
             System.out.println("Choose one of the listed options.");
         }
     }
+
 /// changes go() to fit the house situation
     @Override
     public void go() {
         if (location.equals("outside")) {
-            if (!hasLookedAround()) {
-                System.out.println("You should look around first.");
-                return;
-            }
-
             System.out.println("You walk through the front door and into the house.");
             location = "downstairs";
             setLookedAround(false);
@@ -225,23 +308,33 @@ public class House extends Scene {
 
         String cmd = command.toLowerCase().trim();
 
+        if (waitingForLeaveChoice) {
+            leave(cmd);
+            return;
+        }
+
         if (cmd.equals("look") || cmd.equals("look around")) {
             lookAround();
         } 
         else if (cmd.startsWith("inspect ")) {
             String target = cmd.substring(8).trim();
             inspect(target);
-        } 
+        }
+        else if (cmd.startsWith("notice ")) {
+            String target = cmd.substring(7).trim();
+            notice(target);
+        }
+        else if (cmd.startsWith("pickpocket ")) {
+            String target = cmd.substring(11).trim();
+            pickpocket(target);
+        }
         else if (cmd.equals("talk lestrade")) {
             talkToLestrade();
         } 
-       else if (cmd.equals("leave")) {
+        else if (cmd.equals("leave")) {
             leave("ask");
         }
-        else if (waitingForLeaveChoice) {
-            leave(cmd);
-        }
-        else if (cmd.equals("go") 
+        else if (cmd.equals("go")
                 || cmd.equals("go upstairs")
                 || cmd.equals("go inside")
                 || cmd.equals("go through door")
@@ -282,14 +375,20 @@ public class House extends Scene {
 
         return cluesFound >= 3;
     }
+
     @Override
     public String missingClueWarning() {
         return "You feel like you may have missed something important in the murder room.";
     }
+
     @Override
     public void help() {
         super.help();
         System.out.println("\nHouse commands:");
+        System.out.println("- notice donovan");
+        System.out.println("- notice mud");
+        System.out.println("- notice cigarette");
+        System.out.println("- pickpocket donovan");
         System.out.println("- talk lestrade");
         System.out.println("- leave");
         System.out.println("- leave with watson");
@@ -299,7 +398,6 @@ public class House extends Scene {
         System.out.println("- go inside");
         System.out.println("- go through door");
         System.out.println("- enter house");
-        System.out.println("- look around");
         System.out.println("- inspect <item>");
     }
 }

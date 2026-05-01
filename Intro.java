@@ -74,6 +74,7 @@ public class Intro extends Scene {
                 System.out.println("You scan the alley carefully.");
                 System.out.println("A pink suitcase sits alone near the wall, far too clean to belong there by accident.");
                 System.out.println("Watson slows down beside you. \"That seems... odd,\" he says.");
+                System.out.println("You might want to inspect the suitcase. Type 'inspect suitcase' to take a closer look.");
                 suitcaseFound = true;
                 watsonNoticedSuitcase = true;
             } else {

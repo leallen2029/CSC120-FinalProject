@@ -134,7 +134,7 @@ public class Intro extends Scene {
         if (suitcaseFound && !suitcaseTaken) {
             if (getPlayer().takeItem("suitcase")) {
                 suitcaseTaken = true;
-                getPlayer().writeNote("I took the pink suitcase from the alley.");
+                System.out.println("You might want to take note of this. Type 'write journal' to add a note about the suitcase.");
                 System.out.println("Watson raises an eyebrow but says nothing.");
             }
         } else if (suitcaseTaken) {
@@ -216,6 +216,7 @@ public class Intro extends Scene {
         System.out.println("- walk");
         System.out.println("- take suitcase");
         System.out.println("- leave suitcase");
+        System.out.println("- continue");
     }
 }
 

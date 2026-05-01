@@ -11,8 +11,9 @@ public class House extends Scene {
     private boolean waitingForLeaveChoice;
 
     private boolean noticedDonovan;
-    private boolean noticedMud;
-    private boolean noticedCigarette;
+    private boolean noticedTape;
+    private boolean noticedWindow;
+    private boolean noticedCrowd;
     private boolean pickpocketedDonovan;
 
 /// sets location and tracks the player's interactions with Lestrade, as well as their choice to run out of the house and whether they go back for the suitcase or not.
@@ -27,9 +28,11 @@ public class House extends Scene {
         inspectedClothing = false;
         inspectedBedroom = false;
         waitingForLeaveChoice = false;
+
         noticedDonovan = false;
-        noticedMud = false;
-        noticedCigarette = false;
+        noticedTape = false;
+        noticedWindow = false;
+        noticedCrowd = false;
         pickpocketedDonovan = false;
 
         System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred.");
@@ -42,10 +45,11 @@ public class House extends Scene {
 
         if (location.equals("outside")) {
             System.out.println("John Watson looks around and says, \"This place gives me the creeps.\"");
-            System.out.println("Sergeant Donovan is walking around the yard, looking for clues.");
-            System.out.println("The front door is slightly open.");
-            System.out.println("You can go inside whenever you're ready, or you can investigate outside first.");
-            System.out.println("You may notice Donovan, the mud, or the cigarette.");
+            System.out.println("Sergeant Donovan moves around the yard, sharp-eyed and impatient.");
+            System.out.println("The police tape snaps lightly in the wind.");
+            System.out.println("A few neighbors whisper across the street, falling quiet whenever you glance over.");
+            System.out.println("One upstairs window catches your eye.");
+            System.out.println("The front door is slightly open. You can go inside whenever you're ready.");
         } 
         else if (location.equals("downstairs")) {
             System.out.println("You step just inside the doorway and pause.");
@@ -74,19 +78,24 @@ public class House extends Scene {
         }
 
         if (target.equalsIgnoreCase("donovan")) {
-            System.out.println("Donovan keeps checking her coat pocket while pretending not to watch you.");
+            System.out.println("Donovan keeps one hand near her coat pocket while pretending not to watch you.");
             System.out.println("Whatever is in there, she does not want attention drawn to it.");
             noticedDonovan = true;
         }
-        else if (target.equalsIgnoreCase("mud")) {
-            System.out.println("The mud near the path is disturbed.");
-            System.out.println("Some prints are narrow, lighter than the policemen's boots.");
-            noticedMud = true;
+        else if (target.equalsIgnoreCase("tape")) {
+            System.out.println("The police tape has been shifted and retied.");
+            System.out.println("Someone crossed the boundary after the scene was supposed to be sealed.");
+            noticedTape = true;
         }
-        else if (target.equalsIgnoreCase("cigarette")) {
-            System.out.println("A half-smoked cigarette lies near the path.");
-            System.out.println("It looks recently dropped.");
-            noticedCigarette = true;
+        else if (target.equalsIgnoreCase("window")) {
+            System.out.println("The upstairs window is cracked open.");
+            System.out.println("Not wide enough for an easy escape, but enough to suggest someone wanted air.");
+            noticedWindow = true;
+        }
+        else if (target.equalsIgnoreCase("crowd") || target.equalsIgnoreCase("neighbors")) {
+            System.out.println("The neighbors pretend not to stare.");
+            System.out.println("One of them stops whispering every time you look over.");
+            noticedCrowd = true;
         }
         else {
             System.out.println("You do not notice anything useful about the " + target + ".");
@@ -136,11 +145,14 @@ public class House extends Scene {
             else if (target.equalsIgnoreCase("donovan")) {
                 notice("donovan");
             }
-            else if (target.equalsIgnoreCase("mud")) {
-                notice("mud");
+            else if (target.equalsIgnoreCase("tape")) {
+                notice("tape");
             }
-            else if (target.equalsIgnoreCase("cigarette")) {
-                notice("cigarette");
+            else if (target.equalsIgnoreCase("window")) {
+                notice("window");
+            }
+            else if (target.equalsIgnoreCase("crowd") || target.equalsIgnoreCase("neighbors")) {
+                notice("crowd");
             }
             else {
                 System.out.println("Nothing useful stands out about the " + target + ".");
@@ -385,9 +397,7 @@ public class House extends Scene {
     public void help() {
         super.help();
         System.out.println("\nHouse commands:");
-        System.out.println("- notice donovan");
-        System.out.println("- notice mud");
-        System.out.println("- notice cigarette");
+        System.out.println("- notice <thing>");
         System.out.println("- pickpocket donovan");
         System.out.println("- talk lestrade");
         System.out.println("- leave");

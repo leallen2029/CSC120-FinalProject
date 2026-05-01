@@ -195,10 +195,10 @@ public class Intro extends Scene {
             String target = command.substring(8).trim();
             inspect(target);
         }
-        else if (cmd.equals("take suitcase")) {
+        else if (cmd.contains("take")) {
             takeSuitcase();
         }
-        else if (cmd.equals("leave suitcase")) {
+        else if (cmd.contains("leave")) {
             leaveSuitcase();
         }
         else if (cmd.equals("go") ) {

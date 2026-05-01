@@ -300,5 +300,6 @@ public class House extends Scene {
         System.out.println("- go inside");
         System.out.println("- go through door");
         System.out.println("- enter house");
+        System.out.println("- look around");
     }
 }

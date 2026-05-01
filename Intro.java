@@ -55,7 +55,6 @@ public class Intro extends Scene {
         else if (transportChoice.equalsIgnoreCase("walk")) {
             walkingPath = true;
             getPlayer().setTookCab(false);
-
             System.out.println("You decide to walk to the crime scene.");
             System.out.println("Watson complains about his leg but follows anyway.");
             System.out.println("As you pass an alleyway, something bright catches your eye.");

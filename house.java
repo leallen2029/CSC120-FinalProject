@@ -207,6 +207,14 @@ public class House extends Scene {
                 System.out.println("Nothing important there.");
             }
         } 
+        else if (location.equals("alley")) {
+            if (target.equalsIgnoreCase("suitcase")) {
+                System.out.println("The pink suitcase is abandoned, expensive-looking, and locked.");
+                System.out.println("Whatever is inside may be important.");
+            } else {
+                System.out.println("Nothing useful stands out about the " + target + ".");
+            }
+        }
         else {
             System.out.println("There is nothing specific to inspect here right now.");
         }
@@ -276,7 +284,13 @@ public class House extends Scene {
                 return;
             }
             waitingForLeaveChoice = false;
-            System.out.println("You and Watson return to the alley and recover the suitcase.");
+            System.out.println("You and Watson return toward the alley.");
+            getPlayer().setRanOut(false);
+            getPlayer().setReturnedToSuitcase(true);
+            location = "alley";    
+            setLookedAround(false);
+            waitingForLeaveChoice = false;
+            System.out.println("you and watson return to the alley and recover the suitcase.");
             getPlayer().setRanOut(false);
             getPlayer().setReturnedToSuitcase(true);
             getPlayer().addItem("suitcase");
@@ -287,12 +301,14 @@ public class House extends Scene {
                 System.out.println("You have no reason to go back for anything.");
                 return;
             }
+
             waitingForLeaveChoice = false;
-            System.out.println("You run back alone and recover the suitcase.");
+            System.out.println("You run back alone toward the alley.");
             getPlayer().setRanOut(true);
             getPlayer().setReturnedToSuitcase(true);
-            getPlayer().addItem("suitcase");
-            completeScene();
+
+            location = "alley";       
+            setLookedAround(false);   
         }
         else {
             System.out.println("Choose one of the listed options.");
@@ -302,6 +318,16 @@ public class House extends Scene {
 /// changes go() to fit the house situation
     @Override
     public void go() {
+        if (location.equals("alley")) {
+            if (!getPlayer().hasItem("suitcase")) {
+                System.out.println("You should take the suitcase before leaving.");
+                return;
+            }
+
+            System.out.println("With the suitcase in hand, you return to Baker Street.");
+            completeScene();
+            return;
+        }
         if (location.equals("outside")) {
             System.out.println("You walk through the front door and into the house.");
             location = "downstairs";
@@ -313,7 +339,6 @@ public class House extends Scene {
                 talkToLestrade();
                 return;
             }
-
             System.out.println("Lestrade gestures toward the stairs, and you, Watson, and Lestrade begin to head up.");
             location = "stairwell";
             setLookedAround(false);
@@ -325,6 +350,11 @@ public class House extends Scene {
         } 
         else if (location.equals("murderroom")) {
             System.out.println("You are already in the murder room.");
+        }
+        else if (location.equals("alley")) {
+            System.out.println("You are back in the alley where you saw the pink suitcase.");
+            System.out.println("The suitcase sits near the wall, exactly where you remembered it.");
+            System.out.println("You can inspect the suitcase or take it.");
         }
     }
 
@@ -359,6 +389,14 @@ public class House extends Scene {
         else if (cmd.equals("talk lestrade")) {
             talkToLestrade();
         } 
+        else if (cmd.equals("take suitcase")) {
+            if (location.equals("alley")) {
+                getPlayer().addItem("suitcase");
+                System.out.println("You take the pink suitcase.");
+            } else {
+                System.out.println("There is no suitcase here to take.");
+            }
+        }
         else if (cmd.equals("leave")) {
             leave("ask");
         }
@@ -451,6 +489,16 @@ public class House extends Scene {
             } else {
                 System.out.println("- keep inspecting");
             }
+        }
+        else if (location.equals("alley")) {
+            System.out.println("- look around");
+            System.out.println("- inspect suitcase");
+
+            if (!getPlayer().hasItem("suitcase")) {
+                System.out.println("- take suitcase");
+            }
+
+            System.out.println("- go");
         }
     }
 }

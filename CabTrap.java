@@ -189,11 +189,26 @@ public class CabTrap extends Scene {
     @Override
     public void help() {
         super.help();
-        System.out.println("\nFinal scene commands:");
-        System.out.println("- inspect cabbie");
-        System.out.println("- inspect room");
-        System.out.println("- inspect pills");
-        System.out.println("- confront");
-        System.out.println("- face cabbie");
+
+        System.out.println("\nYou pause and consider your options...");
+
+        if (endingReached) {
+            System.out.println("- the case is over");
+        }
+        else if (!arrivalShown) {
+            System.out.println("- look around");
+        }
+        else if (!lookedAroundFinal) {
+            System.out.println("- look around");
+        }
+        else if (!confrontationStarted) {
+            System.out.println("- inspect cabbie");
+            System.out.println("- inspect room");
+            System.out.println("- inspect pills");
+            System.out.println("- confront");
+        }
+        else {
+            System.out.println("- go");
+        }
     }
 }

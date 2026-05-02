@@ -378,15 +378,43 @@ public class BakerSt extends Scene {
     @Override
     public void help() {
         super.help();
-        System.out.println("\nBaker Street commands:");
-        System.out.println("- inspect suitcase");
-        System.out.println("- open suitcase");
-        System.out.println("- open phone");
-        System.out.println("- take phone");
-        System.out.println("- tell watson");
-        System.out.println("- hide suitcase");
-        System.out.println("- hand over suitcase");
-        System.out.println("- think");
-        System.out.println("- escape");
+
+        System.out.println("\nYou pause and consider your options...");
+
+        if (lostSuitcaseToPolice) {
+            System.out.println("- go");
+        }
+        else if (!arrivalShown) {
+            System.out.println("- look around");
+        }
+        else if (getPlayer().hasItem("suitcase") && !suitcaseOpened && !codeFiguredOut) {
+            System.out.println("- look around");
+            System.out.println("- inspect suitcase");
+            System.out.println("- read journal");
+            System.out.println("- type the code if you know it");
+        }
+        else if (getPlayer().hasItem("suitcase") && !suitcaseOpened && codeFiguredOut) {
+            System.out.println("- open suitcase");
+        }
+        else if (suitcaseOpened && phoneFound && !phoneTaken) {
+            System.out.println("- take phone");
+        }
+        else if (phoneTaken && !phoneOpened) {
+            System.out.println("- open phone");
+        }
+        else if (phoneOpened && watsonArrived && !toldWatson && !hidSuitcase) {
+            System.out.println("- tell watson");
+            System.out.println("- hide suitcase");
+        }
+        else if (phoneOpened && policeArrived && !noticedPhoneLight) {
+            System.out.println("- look around");
+        }
+        else if (phoneOpened && noticedPhoneLight) {
+            System.out.println("- go");
+        }
+        else {
+            System.out.println("- think");
+            System.out.println("- look around");
+        }
     }
 }

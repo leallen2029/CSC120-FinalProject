@@ -212,12 +212,33 @@ public class Intro extends Scene {
     @Override
     public void help() {
         super.help();
-        System.out.println("\nIntro commands:");
-        System.out.println("- cab");
-        System.out.println("- walk");
-        System.out.println("- take suitcase");
-        System.out.println("- leave suitcase");
-        System.out.println("- go");
+
+        System.out.println("\nYou pause and consider your options...");
+
+        if (!transportChosen) {
+            System.out.println("- cab");
+            System.out.println("- walk");
+        }
+        else if (walkingPath && !suitcaseFound) {
+            System.out.println("- look around");
+        }
+        else if (walkingPath && suitcaseFound && !lockFound) {
+            System.out.println("- inspect suitcase");
+            System.out.println("- take suitcase");
+            System.out.println("- leave suitcase");
+        }
+        else if (walkingPath && lockFound && !lockChecked) {
+            System.out.println("- inspect lock");
+            System.out.println("- take suitcase");
+            System.out.println("- leave suitcase");
+        }
+        else if (walkingPath && suitcaseFound && !suitcaseTaken) {
+            System.out.println("- take suitcase");
+            System.out.println("- leave suitcase");
+        }
+        else {
+            System.out.println("- go");
+        }
     }
 }
 

@@ -396,18 +396,41 @@ public class House extends Scene {
     @Override
     public void help() {
         super.help();
-        System.out.println("\nHouse commands:");
-        System.out.println("- notice <thing>");
-        System.out.println("- pickpocket donovan");
-        System.out.println("- talk lestrade");
-        System.out.println("- leave");
-        System.out.println("- leave with watson");
-        System.out.println("- leave without watson");
-        System.out.println("- return suitcase with watson");
-        System.out.println("- return suitcase without watson");
-        System.out.println("- go inside");
-        System.out.println("- go through door");
-        System.out.println("- enter house");
-        System.out.println("- inspect <item>");
+
+        System.out.println("\nWhat you can do right now:");
+
+        if (location.equals("outside")) {
+            System.out.println("- inspect donovan");
+            System.out.println("- inspect window");
+            System.out.println("- inspect crowd");
+            System.out.println("- go inside");
+
+            if (noticedDonovan && !pickpocketedDonovan) {
+                System.out.println("- pickpocket donovan (risky)");
+            }
+        }
+
+        else if (location.equals("downstairs")) {
+            if (!talkedToLestrade) {
+                System.out.println("- talk lestrade (you should do this first)");
+            }
+            System.out.println("- go upstairs");
+        }
+
+        else if (location.equals("stairwell")) {
+            System.out.println("- continue upstairs");
+        }
+
+        else if (location.equals("murderroom")) {
+            System.out.println("- inspect body");
+            System.out.println("- inspect floor");
+            System.out.println("- inspect hands / face / nails / clothing");
+
+            if (foundImportantClues()) {
+                System.out.println("- leave (you've seen enough)");
+            } else {
+                System.out.println("- keep inspecting (you might be missing something)");
+            }
+        }
     }
 }

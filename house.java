@@ -9,7 +9,9 @@ public class House extends Scene {
     private boolean inspectedClothing;
     private boolean inspectedBedroom;
     private boolean waitingForLeaveChoice;
-
+    private boolean inspectedTable;
+    private boolean inspectedStairs;
+    private boolean inspectedCoat;
     private boolean noticedDonovan;
     private boolean noticedTape;
     private boolean noticedWindow;
@@ -18,7 +20,7 @@ public class House extends Scene {
 
 /// sets location and tracks the player's interactions with Lestrade, as well as their choice to run out of the house and whether they go back for the suitcase or not.
     public House(Player player) {
-        super("House", "You arrive outside the house where the death occurred.", player);
+        super("House", "You arrive outside the house where the death occurred. You might want to look around.", player);
         location = "outside";
         talkedToLestrade = false;
         inspectedFloor = false;
@@ -28,12 +30,14 @@ public class House extends Scene {
         inspectedClothing = false;
         inspectedBedroom = false;
         waitingForLeaveChoice = false;
-
         noticedDonovan = false;
         noticedTape = false;
         noticedWindow = false;
         noticedCrowd = false;
         pickpocketedDonovan = false;
+        inspectedTable = false;
+        inspectedStairs = false;
+        inspectedCoat = false;
 
         System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred.");
     }
@@ -44,28 +48,32 @@ public class House extends Scene {
         setLookedAround(true);
 
         if (location.equals("outside")) {
-            System.out.println("John Watson looks around and says, \"This place gives me the creeps.\"");
-            System.out.println("Sergeant Donovan moves around the yard, sharp-eyed and impatient.");
-            System.out.println("The police tape snaps lightly in the wind.");
-            System.out.println("A few neighbors whisper across the street, falling quiet whenever you glance over.");
-            System.out.println("One upstairs window catches your eye.");
-            System.out.println("The front door is slightly open. You can go inside whenever you're ready.");
-        } 
+            System.out.println("Watson shifts beside you. \"Not a pleasant place,\" he mutters.");
+            System.out.println("Donovan is pacing the yard, watching everything.");
+            System.out.println("The police tape flutters in the wind.");
+            System.out.println("Across the street, a few neighbors whisper and stare.");
+            System.out.println("One upstairs window is slightly open.");
+            System.out.println("The front door stands ajar. You can go inside whenever you're ready.");
+        }
+
         else if (location.equals("downstairs")) {
-            System.out.println("You step just inside the doorway and pause.");
-            System.out.println("Policemen are quietly getting ready and moving through the downstairs rooms.");
-            System.out.println("The air feels tense and stale.");
-            System.out.println("Lestrade is here, watching everything carefully.");
-        } 
+            System.out.println("You step into the house and let your eyes adjust.");
+            System.out.println("Officers move quietly, trying not to disturb anything.");
+            System.out.println("A small table sits against the wall, cluttered with notes.");
+            System.out.println("A coat hangs by the door, still slightly damp.");
+            System.out.println("The staircase leads upward into darkness.");
+            System.out.println("Lestrade stands nearby, waiting for you to say something.");
+        }
+
         else if (location.equals("stairwell")) {
-            System.out.println("You pause at the foot of the stairs.");
-            System.out.println("The stairwell is narrow and dim, and every creak seems louder than it should.");
-            System.out.println("Watson stays close behind you as Lestrade leads the way upward.");
-        } 
+            System.out.println("The narrow stairs creak beneath your weight.");
+            System.out.println("The house feels tighter here, more suffocating.");
+        }
+
         else if (location.equals("murderroom")) {
-            System.out.println("You stand in the room where the victim died.");
-            System.out.println("The silence is heavy. Every detail feels important.");
-            System.out.println("You notice the body, the floor, and the bedroom space around you.");
+            System.out.println("You enter the room where it happened.");
+            System.out.println("The body lies still. The silence presses in.");
+            System.out.println("The floor, the body, and the room itself demand your attention.");
         }
     }
 
@@ -400,7 +408,7 @@ public class House extends Scene {
         System.out.println("\nWhat you can do right now:");
 
         if (location.equals("outside")) {
-            System.out.println("- first 'look around' and then you can:");
+            System.out.println("- first 'look around'and then you can:");
             System.out.println("- inspect donovan");
             System.out.println("- inspect window");
             System.out.println("- inspect crowd");
@@ -412,9 +420,15 @@ public class House extends Scene {
         }
 
         else if (location.equals("downstairs")) {
+            System.out.println("- look around");
+            System.out.println("- inspect table");
+            System.out.println("- inspect coat");
+            System.out.println("- inspect stairs");
+
             if (!talkedToLestrade) {
-                System.out.println("- talk lestrade (you should do this first)");
+                System.out.println("- talk lestrade");
             }
+
             System.out.println("- go upstairs");
         }
 

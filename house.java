@@ -400,6 +400,7 @@ public class House extends Scene {
         System.out.println("\nWhat you can do right now:");
 
         if (location.equals("outside")) {
+            System.out.println("- first 'look around' and then you can:");
             System.out.println("- inspect donovan");
             System.out.println("- inspect window");
             System.out.println("- inspect crowd");

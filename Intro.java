@@ -10,6 +10,7 @@ public class Intro extends Scene {
     private boolean suitcaseTaken;
     private boolean transportChosen;
     private boolean watsonNoticedSuitcase;
+    private boolean inCab;
 
     public Intro(Player player) {
         super("Intro", "You wake up in the dark of your 221B Baker Street flat.", player);
@@ -30,6 +31,7 @@ public class Intro extends Scene {
         suitcaseTaken = false;
         transportChosen = false;
         watsonNoticedSuitcase = false;
+        inCab = false;
     }
     public void showIntroText() {
         System.out.println(wakingUp);
@@ -49,8 +51,8 @@ public class Intro extends Scene {
             System.out.println("Through the window, you briefly spot a pink suitcase abandoned in an alleyway.");
             System.out.println("Before you can react, the cab turns the corner.");
             System.out.println("Maybe you want to write this down? Type 'write journal' to add a note.");
-            System.out.println("You have arrived at the crime scene.");
-            completeScene();
+            System.out.println("You are still in the cab. You can look around, talk watson, write journal, or go.");
+            inCab = true;
         }
         else if (transportChoice.equalsIgnoreCase("walk")) {
             walkingPath = true;
@@ -81,6 +83,13 @@ public class Intro extends Scene {
                 System.out.println("You look around the alley again.");
                 System.out.println("Nothing else stands out beyond the pink suitcase.");
             }
+        } 
+        if (inCab) {
+            System.out.println("Rain streaks across the cab window.");
+            System.out.println("Watson sits beside you, watching the city blur past.");
+            System.out.println("For one moment, the pink suitcase flashes in the alley behind you.");
+            System.out.println("You might want to write that down.");
+            return;
         } else {
             System.out.println("221B Baker Street is dim and cluttered.");
             System.out.println("Watson is still waking up, and Lestrade's call hangs in the air.");
@@ -93,7 +102,18 @@ public class Intro extends Scene {
             System.out.println("You should look around first before inspecting anything.");
             return;
         }
-
+        if (inCab) {
+            if (target.equalsIgnoreCase("suitcase")) {
+                System.out.println("You only saw it for a second through the cab window: pink, abandoned, and out of place.");
+            }
+            else if (target.equalsIgnoreCase("watson")) {
+                System.out.println("Watson looks uneasy. \"Did you see something back there?\" he asks.");
+            }
+            else {
+                System.out.println("There is not much to inspect from inside the moving cab.");
+            }
+            return;
+        }
         if (target.equalsIgnoreCase("suitcase")) {
             if (suitcaseFound && !lockFound) {
                 System.out.println("The suitcase is pink, expensive-looking, and abandoned.");
@@ -160,6 +180,12 @@ public class Intro extends Scene {
 
     @Override
     public void go() {
+        if (inCab) {
+            System.out.println("The cab pulls up outside the crime scene.");
+            System.out.println("You step out with Watson and approach the house.");
+            completeScene();
+            return;
+        }
         if (walkingPath && suitcaseFound && !suitcaseTaken) {
             System.out.println("You hesitate before leaving.");
             System.out.println("Do you want to take the suitcase or leave it?");

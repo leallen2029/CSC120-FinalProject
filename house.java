@@ -433,10 +433,11 @@ public class House extends Scene {
         }
 
         else if (location.equals("stairwell")) {
-            System.out.println("- continue upstairs");
+            System.out.println("- go upstairs");
         }
 
         else if (location.equals("murderroom")) {
+            System.out.println("first look around, then you can:");
             System.out.println("- inspect body");
             System.out.println("- inspect floor");
             System.out.println("- inspect hands / face / nails / clothing");

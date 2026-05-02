@@ -229,23 +229,12 @@ public class Scene {
         else if (cmd.equals("enter")) {
             enter();
         }
-        else if (cmd.startsWith("go ")) {
-            String direction = cmd.substring(3).trim();
-
-            if (direction.equals("north") ||
-                direction.equals("south") ||
-                direction.equals("east") ||
-                direction.equals("west")) {
-                move(direction);
-            } else {
-                System.out.println("Go where? Try north, south, east, or west.");
-            }
-        }
         else if (cmd.equals("go") ) {
             go();
         }
         else {
-            System.out.println("Unknown command.");
+            System.out.println("Hmm. That won't help here.");
+            help();
         }
     }
 }

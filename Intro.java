@@ -48,9 +48,6 @@ public class Intro extends Scene {
             getPlayer().setTookCab(true);
 
             System.out.println("You hail a cab and head toward the crime scene.");
-            System.out.println("Through the window, you briefly spot a pink suitcase abandoned in an alleyway.");
-            System.out.println("Before you can react, the cab turns the corner.");
-            System.out.println("Maybe you want to write this down? Type 'write journal' to add a note.");
             System.out.println("You are still in the cab. You can look around, talk watson, write journal, or go.");
             inCab = true;
         }

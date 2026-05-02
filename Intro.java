@@ -33,27 +33,27 @@ public class Intro extends Scene {
         watsonNoticedSuitcase = false;
         inCab = false;
     }
+
     public void showIntroText() {
         System.out.println(wakingUp);
         System.out.println(transportOption);
     }
 
-    
-    
-    
-
     public void chooseTransport(String transportChoice) {
         if (transportChoice.equalsIgnoreCase("cab")) {
             walkingPath = false;
+            inCab = true;
             getPlayer().setTookCab(true);
 
             System.out.println("You hail a cab and head toward the crime scene.");
-            System.out.println("You are still in the cab. You can look around, talk watson, write journal, or go.");
-            inCab = true;
+            System.out.println("Rain streaks across the window as the city slides past.");
+            System.out.println("You can look around, inspect Watson, or go when you are ready.");
         }
         else if (transportChoice.equalsIgnoreCase("walk")) {
             walkingPath = true;
+            inCab = false;
             getPlayer().setTookCab(false);
+
             System.out.println("You decide to walk to the crime scene.");
             System.out.println("Watson complains about his leg but follows anyway.");
             System.out.println("As you pass an alleyway, something bright catches your eye.");
@@ -68,26 +68,30 @@ public class Intro extends Scene {
     public void lookAround() {
         setLookedAround(true);
 
-        if (walkingPath) {
+        if (inCab) {
+            System.out.println("Rain streaks across the cab window.");
+            System.out.println("Watson sits beside you, watching the city blur past.");
+            System.out.println("For one moment, a pink suitcase flashes in the alley behind you.");
+            System.out.println("It is strange enough that you may want to remember it.");
+            getPlayer().setSawSuitcase(true);
+            suitcaseFound = true;
+            watsonNoticedSuitcase = true;
+        }
+        else if (walkingPath) {
             if (!suitcaseFound) {
                 System.out.println("You scan the alley carefully.");
                 System.out.println("A pink suitcase sits alone near the wall, far too clean to belong there by accident.");
                 System.out.println("Watson slows down beside you. \"That seems... odd,\" he says.");
-                System.out.println("You might want to inspect the suitcase. Type 'inspect suitcase' to take a closer look.");
+                System.out.println("You might want to inspect the suitcase.");
+                getPlayer().setSawSuitcase(true);
                 suitcaseFound = true;
                 watsonNoticedSuitcase = true;
             } else {
                 System.out.println("You look around the alley again.");
                 System.out.println("Nothing else stands out beyond the pink suitcase.");
             }
-        } 
-        if (inCab) {
-            System.out.println("Rain streaks across the cab window.");
-            System.out.println("Watson sits beside you, watching the city blur past.");
-            System.out.println("For one moment, the pink suitcase flashes in the alley behind you.");
-            System.out.println("You might want to write that down.");
-            return;
-        } else {
+        }
+        else {
             System.out.println("221B Baker Street is dim and cluttered.");
             System.out.println("Watson is still waking up, and Lestrade's call hangs in the air.");
         }
@@ -99,9 +103,13 @@ public class Intro extends Scene {
             System.out.println("You should look around first before inspecting anything.");
             return;
         }
+
         if (inCab) {
             if (target.equalsIgnoreCase("suitcase")) {
                 System.out.println("You only saw it for a second through the cab window: pink, abandoned, and out of place.");
+                getPlayer().setSawSuitcase(true);
+                suitcaseFound = true;
+                watsonNoticedSuitcase = true;
             }
             else if (target.equalsIgnoreCase("watson")) {
                 System.out.println("Watson looks uneasy. \"Did you see something back there?\" he asks.");
@@ -111,6 +119,7 @@ public class Intro extends Scene {
             }
             return;
         }
+
         if (target.equalsIgnoreCase("suitcase")) {
             if (suitcaseFound && !lockFound) {
                 System.out.println("The suitcase is pink, expensive-looking, and abandoned.");
@@ -126,7 +135,7 @@ public class Intro extends Scene {
         else if (target.equalsIgnoreCase("lock")) {
             if (lockFound && !lockChecked) {
                 System.out.println("The lock needs a five-letter code.");
-                System.out.println("Maybe you want to write this down? Type 'write journal' to add a note.");
+                System.out.println("Maybe you want to write this down.");
                 getPlayer().writeNote("The pink suitcase has a five-letter lock.");
                 lockChecked = true;
             } else if (lockFound) {
@@ -138,7 +147,7 @@ public class Intro extends Scene {
         else if (target.equalsIgnoreCase("watson")) {
             if (watsonNoticedSuitcase) {
                 System.out.println("Watson looks from you to the suitcase.");
-                System.out.println("\"Should we take it?\" he asks, clearly unsure whether he wants the answer.");
+                System.out.println("\"Should we do something about it?\" he asks.");
             } else {
                 System.out.println("Watson is watching you, waiting to see what you do next.");
             }
@@ -152,12 +161,13 @@ public class Intro extends Scene {
         if (suitcaseFound && !suitcaseTaken) {
             if (getPlayer().takeItem("suitcase")) {
                 suitcaseTaken = true;
-                System.out.println("You might want to take note of this. Type 'write journal' to add a note about the suitcase.");
-                System.out.println("Watson raises an eyebrow but says nothing.");
+                System.out.println("You take the pink suitcase.");
             }
-        } else if (suitcaseTaken) {
+        } 
+        else if (suitcaseTaken) {
             System.out.println("You already took the suitcase.");
-        } else {
+        } 
+        else {
             System.out.println("There is no suitcase here to take.");
         }
     }
@@ -183,6 +193,7 @@ public class Intro extends Scene {
             completeScene();
             return;
         }
+
         if (walkingPath && suitcaseFound && !suitcaseTaken) {
             System.out.println("You hesitate before leaving.");
             System.out.println("Do you want to take the suitcase or leave it?");
@@ -208,6 +219,7 @@ public class Intro extends Scene {
                 transportChosen = true;
             } else {
                 System.out.println("Type 'cab' or 'walk' to choose how you travel.");
+                help();
             }
             return;
         }
@@ -216,22 +228,24 @@ public class Intro extends Scene {
             lookAround();
         }
         else if (cmd.startsWith("inspect ")) {
-            String target = command.substring(8).trim();
+            String target = cmd.substring(8).trim();
             inspect(target);
         }
-        else if (cmd.contains("take")) {
+        else if (cmd.equals("take suitcase")) {
             takeSuitcase();
         }
-        else if (cmd.contains("leave")) {
+        else if (cmd.equals("leave suitcase")) {
             leaveSuitcase();
         }
-        else if (cmd.equals("go") ) {
+        else if (cmd.equals("go")) {
             go();
         }
         else {
-            System.out.println("Unknown command.");
+            System.out.println("That does not help right now.");
+            help();
         }
     }
+
     @Override
     public void help() {
         super.help();
@@ -242,27 +256,37 @@ public class Intro extends Scene {
             System.out.println("- cab");
             System.out.println("- walk");
         }
+        else if (inCab && !suitcaseFound) {
+            System.out.println("- look around");
+            System.out.println("- inspect watson");
+            System.out.println("- go");
+        }
+        else if (inCab && suitcaseFound && !suitcaseTaken) {
+            System.out.println("- inspect suitcase");
+            System.out.println("- go");
+        }
         else if (walkingPath && !suitcaseFound) {
             System.out.println("- look around");
         }
-        else if (walkingPath && suitcaseFound && !lockFound) {
+        else if (suitcaseFound && !lockFound && !suitcaseTaken) {
             System.out.println("- inspect suitcase");
             System.out.println("- take suitcase");
             System.out.println("- leave suitcase");
+            System.out.println("- go");
         }
-        else if (walkingPath && lockFound && !lockChecked) {
+        else if (lockFound && !lockChecked && !suitcaseTaken) {
             System.out.println("- inspect lock");
             System.out.println("- take suitcase");
             System.out.println("- leave suitcase");
+            System.out.println("- go");
         }
-        else if (walkingPath && suitcaseFound && !suitcaseTaken) {
+        else if (suitcaseFound && !suitcaseTaken) {
             System.out.println("- take suitcase");
             System.out.println("- leave suitcase");
+            System.out.println("- go");
         }
         else {
             System.out.println("- go");
         }
     }
 }
-
-//help overloaded

@@ -7,9 +7,11 @@ public class Player {
     private boolean tookCab;
     private boolean ranOut;
     private boolean returnedToSuitcase;
+    private boolean sawSuitcase;
     private ArrayList<String> inventory;
     private ArrayList<String> journal;
     private final int MAX_ITEMS = 5;
+    
 
     public Player() {
         inventory = new ArrayList<>();
@@ -17,6 +19,7 @@ public class Player {
         tookCab = false;
         ranOut = false;
         returnedToSuitcase = false;
+        sawSuitcase = false;
     }
 
     public void setTookCab(boolean tookCab) {
@@ -127,5 +130,12 @@ public class Player {
         if (!inventory.contains(item)) {
             inventory.add(item);
         }
+    }
+    public void setSawSuitcase(boolean sawSuitcase) {
+        this.sawSuitcase = sawSuitcase;
+    }
+
+    public boolean hasSawSuitcase() {
+        return sawSuitcase;
     }
 }

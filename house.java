@@ -245,7 +245,7 @@ public class House extends Scene {
             waitingForLeaveChoice = true;
             System.out.println("Where do you want to go?");
 
-            if (getPlayer().hasItem("suitcase") || getPlayer().hasReturnedToSuitcase()) {
+            if (getPlayer().hasItem("suitcase") || getPlayer().hasReturnedToSuitcase() || !getPlayer().hasSawSuitcase()) {
                 System.out.println("- leave with watson");
                 System.out.println("- leave without watson");
             } else {
@@ -271,19 +271,27 @@ public class House extends Scene {
             completeScene();
         }
         else if (choice.equals("return suitcase with watson")) {
+            if (!getPlayer().hasSawSuitcase()) {
+                System.out.println("You have no reason to go back for anything.");
+                return;
+            }
             waitingForLeaveChoice = false;
             System.out.println("You and Watson return to the alley and recover the suitcase.");
             getPlayer().setRanOut(false);
             getPlayer().setReturnedToSuitcase(true);
-            getPlayer().takeItem("suitcase");
+            getPlayer().addItem("suitcase");
             completeScene();
         }
         else if (choice.equals("return suitcase without watson")) {
+            if (!getPlayer().hasSawSuitcase()) {
+                System.out.println("You have no reason to go back for anything.");
+                return;
+            }
             waitingForLeaveChoice = false;
             System.out.println("You run back alone and recover the suitcase.");
             getPlayer().setRanOut(true);
             getPlayer().setReturnedToSuitcase(true);
-            getPlayer().takeItem("suitcase");
+            getPlayer().addItem("suitcase");
             completeScene();
         }
         else {
@@ -358,7 +366,6 @@ public class House extends Scene {
                 || cmd.equals("go upstairs")
                 || cmd.equals("go inside")
                 || cmd.equals("go through door")
-                || cmd.equals("enter")
                 || cmd.equals("enter house")) {
             go();
         }
@@ -366,7 +373,7 @@ public class House extends Scene {
             go();
         }
         else {
-            super.handleCommand(command);
+            System.out.println("Unknown command.");
         }
     }
 
@@ -408,7 +415,7 @@ public class House extends Scene {
         System.out.println("\nWhat you can do right now:");
 
         if (location.equals("outside")) {
-            System.out.println("- first 'look around'and then you can:");
+            System.out.println("- first 'look around' and then you can:");
             System.out.println("- inspect donovan");
             System.out.println("- inspect window");
             System.out.println("- inspect crowd");
@@ -418,12 +425,8 @@ public class House extends Scene {
                 System.out.println("- pickpocket donovan (risky)");
             }
         }
-
         else if (location.equals("downstairs")) {
             System.out.println("- look around");
-            System.out.println("- inspect table");
-            System.out.println("- inspect coat");
-            System.out.println("- inspect stairs");
 
             if (!talkedToLestrade) {
                 System.out.println("- talk lestrade");
@@ -431,21 +434,22 @@ public class House extends Scene {
 
             System.out.println("- go upstairs");
         }
-
         else if (location.equals("stairwell")) {
             System.out.println("- go upstairs");
         }
-
         else if (location.equals("murderroom")) {
-            System.out.println("first look around, then you can:");
+            System.out.println("First look around, then you can:");
             System.out.println("- inspect body");
             System.out.println("- inspect floor");
-            System.out.println("- inspect hands / face / nails / clothing");
+            System.out.println("- inspect hands");
+            System.out.println("- inspect face");
+            System.out.println("- inspect nails");
+            System.out.println("- inspect clothing");
 
             if (foundImportantClues()) {
-                System.out.println("- leave (you've seen enough)");
+                System.out.println("- leave");
             } else {
-                System.out.println("- keep inspecting (you might be missing something)");
+                System.out.println("- keep inspecting");
             }
         }
     }

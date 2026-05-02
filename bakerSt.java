@@ -43,8 +43,13 @@ public class BakerSt extends Scene {
         System.out.println("You return to Baker Street.");
 
         if (getPlayer().hasItem("suitcase")) {
-            System.out.println("The pink suitcase is with you now, sitting in the room like a challenge.");
-            System.out.println("You cannot shake the feeling that it matters.");
+            if (getPlayer().hasReturnedToSuitcase()) {
+                System.out.println("The pink suitcase is with you now.");
+                System.out.println("You returned for it after leaving the house, but you still need to examine it properly.");
+            } else {
+                System.out.println("The pink suitcase is with you now, sitting in the room like a challenge.");
+                System.out.println("You cannot shake the feeling that it matters.");
+            }
         } else {
             System.out.println("Without the suitcase, you feel that something important has slipped from your grasp.");
             System.out.println("If the police take possession of it, you may lose your best chance to solve the crime properly.");

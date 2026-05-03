@@ -165,7 +165,6 @@ public class Intro extends Scene {
         if (suitcaseFound && !suitcaseTaken) {
             if (getPlayer().takeItem("suitcase")) {
                 suitcaseTaken = true;
-                System.out.println("You take the pink suitcase.");
             }
         } 
         else if (suitcaseTaken) {

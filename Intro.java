@@ -158,6 +158,10 @@ public class Intro extends Scene {
     }
 
     public void takeSuitcase() {
+        if (inCab) {
+            System.out.println("You only caught a glimpse of it from the cab. You can't stop now.");
+            return;
+        }
         if (suitcaseFound && !suitcaseTaken) {
             if (getPlayer().takeItem("suitcase")) {
                 suitcaseTaken = true;

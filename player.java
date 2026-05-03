@@ -47,15 +47,8 @@ public class Player {
     }
 
     public boolean dropItem(String item) {
-        if (inventory.remove(item)) {
-            System.out.println("You drop the " + item + ".");
-            return true;
-        } else {
-            System.out.println("You do not have " + item + ".");
-            return false;
-        }
+        return inventory.remove(item);
     }
-
     public boolean hasItem(String item) {
         return inventory.contains(item);
     }

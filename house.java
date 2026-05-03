@@ -1,5 +1,5 @@
 public class House extends Scene {
-
+// attributes
     private String location;
     private boolean talkedToLestrade;
     private boolean inspectedFloor;
@@ -18,10 +18,11 @@ public class House extends Scene {
     private boolean noticedCrowd;
     private boolean pickpocketedDonovan;
 
-/// sets location and tracks the player's interactions with Lestrade, as well as their choice to run out of the house and whether they go back for the suitcase or not.
+// sets location and tracks the player's interactions with Lestrade, as well as their choice to run out of the house and whether they go back for the suitcase or not.
     public House(Player player) {
         super("House", "You arrive outside the house where the death occurred. You might want to look around.", player);
         location = "outside";
+// constructor
         talkedToLestrade = false;
         inspectedFloor = false;
         inspectedNails = false;
@@ -42,7 +43,7 @@ public class House extends Scene {
         System.out.println("Stepping under the crime scene tape, you find yourself standing outside the house where the death occurred.");
     }
 
-/// handles the player's interactions with the house, including looking around, inspecting specific details, talking to Lestrade, exploring the outside area, leaving the house, and moving through the different areas of the house. The player's choices and interactions will affect how the scene progresses and what information they uncover.
+// handles the player's interactions with the house, including looking around, inspecting specific details, talking to Lestrade, exploring the outside area, leaving the house, and moving through the different areas of the house. The player's choices and interactions will affect how the scene progresses and what information they uncover.
     @Override
     public void lookAround() {
         setLookedAround(true);
@@ -77,7 +78,7 @@ public class House extends Scene {
         }
     }
 
-/// lets the player notice details outside the house without forcing them to follow one exact path.
+// lets the player notice details outside the house without forcing them to follow one exact path.
     @Override
     public void notice(String target) {
         if (!location.equals("outside")) {
@@ -110,7 +111,7 @@ public class House extends Scene {
         }
     }
 
-/// allows the player to take a risky action outside if they noticed the right detail first.
+// allows the player to take a risky action outside if they noticed the right detail first.
     public void pickpocket(String target) {
         if (!location.equals("outside")) {
             System.out.println("There is no one here to pickpocket.");
@@ -138,7 +139,7 @@ public class House extends Scene {
         }
     }
 
-/// ensures the player knows to look around before inspecting and provides different descriptions based on the player's location in the house and what they choose to inspect.
+// ensures the player knows to look around before inspecting and provides different descriptions based on the player's location in the house and what they choose to inspect.
     @Override
     public void inspect(String target) {
         if (!hasLookedAround() && !location.equals("outside")) {
@@ -238,7 +239,7 @@ public class House extends Scene {
         }
     }
 
-/// deals with the player leaving the house, ensuring they uncover at least some things    
+// deals with the player leaving the house, ensuring they uncover at least some things    
     public void leave(String choice) {
         if (!location.equals("murderroom")) {
             System.out.println("You can only leave from the murder room.");
@@ -311,7 +312,7 @@ public class House extends Scene {
         }
     }
 
-/// changes go() to fit the house situation
+// changes go() to fit the house situation
     @Override
     public void go() {
         if (location.equals("alley")) {

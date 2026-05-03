@@ -1,5 +1,5 @@
 public class CabTrap extends Scene {
-/// final scene where the player confronts the cabbie, with different outcomes based on the player's choices and interactions in previous scenes.
+// final scene where the player confronts the cabbie, with different outcomes based on the player's choices and interactions in previous scenes.
 //  The player can choose to look around, inspect the cabbie and the room, confront the cabbie, or try to move on, but their options and the consequences of their actions will depend on how they have navigated the case up to this point.
     private boolean arrivalShown;
     private boolean lookedAroundFinal;
@@ -14,7 +14,7 @@ public class CabTrap extends Scene {
         endingReached = false;
     }
 
-/// shows the arrival text and sets the stage for the player's confrontation with the cabbie, including the tension in the room and the significance of this final encounter. The player's choices in this scene will determine how the confrontation unfolds and what information they uncover about the cabbie and his role in the case.
+// shows the arrival text and sets the stage for the player's confrontation with the cabbie, including the tension in the room and the significance of this final encounter. The player's choices in this scene will determine how the confrontation unfolds and what information they uncover about the cabbie and his role in the case.
     public void showArrival() {
         if (arrivalShown) {
             return;
@@ -38,7 +38,7 @@ public class CabTrap extends Scene {
         arrivalShown = true;
     }
 
-/// allows the player to look around the room and take in the atmosphere of the confrontation, which will affect how they approach the situation and what they notice about the cabbie and the room. The player's observations will influence their strategy for confronting the cabbie and how they interpret his behavior.
+// allows the player to look around the room and take in the atmosphere of the confrontation, which will affect how they approach the situation and what they notice about the cabbie and the room. The player's observations will influence their strategy for confronting the cabbie and how they interpret his behavior.
     @Override
     public void lookAround() {
         if (endingReached) {
@@ -55,7 +55,7 @@ public class CabTrap extends Scene {
         System.out.println("This is no longer just about clues. This is the end of the hunt.");
     }
 
-/// allows the player to inspect specific details about the cabbie and the room, which will provide insights into the cabbie's motivations and the significance of this final confrontation. The player's deductions from these inspections will affect how they approach the confrontation and what they expect from the cabbie.
+// allows the player to inspect specific details about the cabbie and the room, which will provide insights into the cabbie's motivations and the significance of this final confrontation. The player's deductions from these inspections will affect how they approach the confrontation and what they expect from the cabbie.
     @Override
     public void inspect(String target) {
         if (endingReached) {
@@ -85,7 +85,7 @@ public class CabTrap extends Scene {
         }
     }
 
-/// handles the player's confrontation with the cabbie, which will be influenced by their choices and interactions in previous scenes. The outcome of this confrontation will depend on how well the player has prepared and what information they have uncovered, as well as how they choose to face the cabbie in this moment.
+// handles the player's confrontation with the cabbie, which will be influenced by their choices and interactions in previous scenes. The outcome of this confrontation will depend on how well the player has prepared and what information they have uncovered, as well as how they choose to face the cabbie in this moment.
     public void confront() {
         if (endingReached) {
             System.out.println("It is already finished.");
@@ -137,7 +137,7 @@ public class CabTrap extends Scene {
         completeScene();
     }
 
-/// deals with go() for this situation
+// deals with go() for this situation
     @Override
     public void go() {
         if (endingReached) {
@@ -153,7 +153,7 @@ public class CabTrap extends Scene {
         }
     }
 
-/// handles the player's commands in this final scene, allowing them to look around, inspect the cabbie and the room, confront the cabbie, or try to move on. The player's options and the consequences of their actions will depend on how they have navigated the case up to this point, and their choices in this scene will determine how the confrontation unfolds and what information they uncover about the cabbie and his role in the case.
+// handles the player's commands in this final scene, allowing them to look around, inspect the cabbie and the room, confront the cabbie, or try to move on. The player's options and the consequences of their actions will depend on how they have navigated the case up to this point, and their choices in this scene will determine how the confrontation unfolds and what information they uncover about the cabbie and his role in the case.
     @Override
     public void handleCommand(String command) {
         if (handleBasicCommand(command)) {

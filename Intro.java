@@ -1,8 +1,7 @@
 public class Intro extends Scene {
-
+// attributes
     private String wakingUp;
     private String transportOption;
-
     private boolean walkingPath;
     private boolean suitcaseFound;
     private boolean lockFound;
@@ -14,7 +13,7 @@ public class Intro extends Scene {
 
     public Intro(Player player) {
         super("Intro", "You wake up in the dark of your 221B Baker Street flat.", player);
-
+       
         wakingUp = """
         As you pick up the phone, you hear Detective Inspector Lestrade
         tell you there has been another death that he wants you to come look at.
@@ -23,7 +22,7 @@ public class Intro extends Scene {
         """;
 
         transportOption = "How would you like to get to the crime scene? You can take a cab or walk.";
-
+// constructor
         walkingPath = false;
         suitcaseFound = false;
         lockFound = false;
@@ -33,12 +32,12 @@ public class Intro extends Scene {
         watsonNoticedSuitcase = false;
         inCab = false;
     }
-
+// prints intro
     public void showIntroText() {
         System.out.println(wakingUp);
         System.out.println(transportOption);
     }
-
+// helps reader make choices about transportation, which will affect how they experience the scene and what clues they encounter on the way to the crime scene. The player's choice will influence how they interact with Watson and what they notice about their surroundings, setting the stage for how they approach the investigation and what information they gather along the way.
     public void chooseTransport(String transportChoice) {
         if (transportChoice.equalsIgnoreCase("cab")) {
             walkingPath = false;
@@ -63,7 +62,7 @@ public class Intro extends Scene {
             System.out.println("Invalid choice. Please choose 'cab' or 'walk'.");
         }
     }
-
+// overrides look around to provide specific descriptions based on the player's transportation choice, which will help them notice important details and set the tone for their investigation. The player's observations will influence how they approach the crime scene and what clues they prioritize as they begin their investigation.
     @Override
     public void lookAround() {
         setLookedAround(true);
@@ -96,7 +95,7 @@ public class Intro extends Scene {
             System.out.println("Watson is still waking up, and Lestrade's call hangs in the air.");
         }
     }
-
+// overrides inspect to provide interactions based on the player's transportation choice and what they have observed, which will help them gather important clues and make informed decisions as they approach the crime scene.
     @Override
     public void inspect(String target) {
         if (!hasLookedAround()) {
@@ -156,7 +155,7 @@ public class Intro extends Scene {
             System.out.println("There is nothing important about the " + target + ".");
         }
     }
-
+// the following methods allow the player to interact with the suitcase they find, giving them the option to take it with them or leave it behind.
     public void takeSuitcase() {
         if (inCab) {
             System.out.println("You only caught a glimpse of it from the cab. You can't stop now.");
@@ -207,7 +206,7 @@ public class Intro extends Scene {
         System.out.println("You have arrived at the house.");
         completeScene();
     }
-
+// makes basic commands scene-specific
     @Override
     public void handleCommand(String command) {
         if (handleBasicCommand(command)) {
@@ -248,7 +247,7 @@ public class Intro extends Scene {
             help();
         }
     }
-
+// makes help for the most individuated parts of the scene so the reader can get guidance if need be.
     @Override
     public void help() {
         System.out.println("\nYou pause and consider your options...");

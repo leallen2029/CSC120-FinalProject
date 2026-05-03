@@ -287,13 +287,9 @@ public class House extends Scene {
             System.out.println("You and Watson return toward the alley.");
             getPlayer().setRanOut(false);
             getPlayer().setReturnedToSuitcase(true);
-            location = "alley";    
-            setLookedAround(false);
-            waitingForLeaveChoice = false;
-            System.out.println("you and watson return to the alley and recover the suitcase.");
-            getPlayer().setRanOut(false);
-            getPlayer().setReturnedToSuitcase(true);
             getPlayer().addItem("suitcase");
+            location = "alley";
+            setLookedAround(false);
             completeScene();
         }
         else if (choice.equals("return suitcase without watson")) {
@@ -448,8 +444,6 @@ public class House extends Scene {
 
     @Override
     public void help() {
-        super.help();
-
         System.out.println("\nWhat you can do right now:");
 
         if (location.equals("outside")) {

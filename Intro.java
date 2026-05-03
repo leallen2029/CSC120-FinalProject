@@ -248,8 +248,6 @@ public class Intro extends Scene {
 
     @Override
     public void help() {
-        super.help();
-
         System.out.println("\nYou pause and consider your options...");
 
         if (!transportChosen) {

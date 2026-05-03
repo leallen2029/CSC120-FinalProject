@@ -13,7 +13,6 @@ public class BakerSt extends Scene {
     private boolean lostSuitcaseToPolice;
     private boolean waitingForCodeAnswer;
     private boolean codeFiguredOut;
-    private boolean phoneTaken;
 
 /// initializes the scene and sets the initial state of all events and items
     public BakerSt(Player player) {
@@ -31,7 +30,6 @@ public class BakerSt extends Scene {
         lostSuitcaseToPolice = false;
         waitingForCodeAnswer = false;
         codeFiguredOut = false;
-        phoneTaken = false;
     }
 
 /// shows the arrival text and sets the stage for the player's investigation in Baker Street, including the importance of the suitcase and the phone, as well as the presence of Watson and the police. The player's interactions with these elements will affect how the scene progresses and what information they uncover.
@@ -166,7 +164,7 @@ public class BakerSt extends Scene {
                 return;
             }
 
-            if (!phoneTaken) {
+            if (!getPlayer().hasItem("phone")) {
                 System.out.println("You need to take the phone first.");
                 return;
             }
@@ -195,11 +193,11 @@ public class BakerSt extends Scene {
         if (target.equalsIgnoreCase("phone")) {
             if (!phoneFound) {
                 System.out.println("There is no phone to take.");
-            } else if (phoneTaken) {
+            } else if (getPlayer().hasItem("phone")) {
                 System.out.println("You already took the phone.");
             } else {
                 System.out.println("You pick up the phone.");
-                phoneTaken = true;
+                getPlayer().addItem("phone");
             }
         } else {
             super.take(target);
@@ -361,6 +359,9 @@ public class BakerSt extends Scene {
             String target = cmd.substring(5).trim();
             open(target);
         }
+        else if (cmd.startsWith("take ")) {
+            take(cmd.substring(5).trim());
+        }
         else if (cmd.equals("tell watson")) {
             tellWatson();
         }
@@ -382,8 +383,6 @@ public class BakerSt extends Scene {
     }
     @Override
     public void help() {
-        super.help();
-
         System.out.println("\nYou pause and consider your options...");
 
         if (lostSuitcaseToPolice) {
@@ -401,10 +400,10 @@ public class BakerSt extends Scene {
         else if (getPlayer().hasItem("suitcase") && !suitcaseOpened && codeFiguredOut) {
             System.out.println("- open suitcase");
         }
-        else if (suitcaseOpened && phoneFound && !phoneTaken) {
+        else if (suitcaseOpened && phoneFound && !getPlayer().hasItem("phone")) {
             System.out.println("- take phone");
         }
-        else if (phoneTaken && !phoneOpened) {
+        else if (getPlayer().hasItem("phone") && !phoneOpened) {
             System.out.println("- open phone");
         }
         else if (phoneOpened && watsonArrived && !toldWatson && !hidSuitcase) {

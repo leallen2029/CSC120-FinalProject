@@ -1,3 +1,5 @@
+One option I am considering is the Secret Garden because it was my favorite book as a child. I think it would be fun to have the player explore different parts of the garden and follow the narrative. It could use a NSEW directional format. However, I think it would not be the best for this project because it is a chapter book, and I don’t see any clear path to do the narrative justice considering its length. 
+
 Sherlock 
 
 ______

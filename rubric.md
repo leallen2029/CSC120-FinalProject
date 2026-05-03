@@ -43,6 +43,6 @@ __y___ 2 pt: Complies with style guidelines (missing items 1 pt each):
 
       __y___ Methods avoid confusing side effects.
 
-_____ 1 pt: All required files included with submission (including completed checklist file).
+__y___ 1 pt: All required files included with submission (including completed checklist file).
 
-_____ 1 pt: `readme.md` contains your reflection on the project and responses to all prompts .
+__y___ 1 pt: `readme.md` contains your reflection on the project and responses to all prompts .
